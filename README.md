@@ -1,3 +1,3 @@
-# flightsoffancy
+# Flights of Fancy
 
 - Joseph
