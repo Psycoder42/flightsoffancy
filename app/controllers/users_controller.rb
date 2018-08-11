@@ -9,12 +9,16 @@ class UsersController < ApplicationController
   end
 
   def create
-    # Create the user
-    newUser = User.create_user({
-      "username" => params["username"],
-      "password" => params["password"],
-      "password_confirm" => params["password_confirm"],
-    })
+    newUser = nil
+    # Sanity test that the password matches the confirm
+    if params["password"] === params["password_confirm"]
+      # Create the user
+      newUser = User.create_user({
+        "username" => params["username"],
+        "password" => params["password"],
+        "password_confirm" => params["password_confirm"],
+      })
+    end
     if newUser.nil?
       # User creation failed
       render status: 400, json: nil

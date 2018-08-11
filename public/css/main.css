@@ -44,10 +44,23 @@ form {
 }
 
 .login-box {
+  position: fixed;
+  top: 0;
+  right: 0;
   width: 500px;
-  padding: 50px;
+  padding: 10px 50px;
   background-color: #FDF2BC;
   border: 2px solid #4D0632;
+  transition-duration: .5s;
+  z-index: 1
+}
+
+.login-box.hidden {
+  transform: translateY(-100%);
+}
+
+.login-box.visible {
+  transform: none;
 }
 
 .login-buttons {
@@ -67,7 +80,12 @@ h2 {
 input {
   width: 100%;
 }
+
 .text-link {
-  color: blue;
   cursor: pointer;
+  margin: 0 1em;
+}
+
+.col.spacer {
+  flex-grow: 2;
 }
