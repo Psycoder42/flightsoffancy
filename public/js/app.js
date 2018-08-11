@@ -41,21 +41,23 @@ class App extends React.Component {
   // Render this component
   render() {
     return (
-      <header>
-        <h1>Flights of Fancy</h1>
-        // Thrown in to test that log in/out work
-        // TODO: move to more appropriate spot 
-        {
-          this.state.curUser
-          ?
-            <h3>
-              Hello {this.state.curUser.username}!
-              (<span className="text-link" onClick={this.logout}>sign out</span>)
-            </h3>
-          :
-            <CredentialsForm signin={true} onSubmit={this.login}/>
-        }
-      </header>
+      <div className="container-fluid">
+        <Navigation />
+        <div className="container search">
+          <div className="row login-box">
+              {
+                this.props.curUser
+                ?
+                  <h3>
+                    Hello {this.props.curUser.username}!
+                    (<span className="text-link" onClick={this.logout}>sign out</span>)
+                  </h3>
+                :
+                  <CredentialsForm signin={true} onSubmit={this.login}/>
+              }
+          </div>
+        </div>
+      </div>
     )
   }
 }
@@ -63,5 +65,5 @@ class App extends React.Component {
 // Render the main app into the index page
 ReactDOM.render(
   <App/>,
-  document.querySelector('.container')
+  document.querySelector('body')
 )
