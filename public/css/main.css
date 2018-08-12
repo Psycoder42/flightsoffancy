@@ -46,7 +46,7 @@ form {
 
 .login-box {
   position: fixed;
-  top: 0px;
+  top: 0;
   right: 0;
   width: 400px;
   padding: 15px 50px;
