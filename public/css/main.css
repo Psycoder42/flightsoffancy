@@ -19,6 +19,7 @@ h1 {
 .navigation {
   background: transparent;
   padding: 15px;
+  align-items: center;
   /* background-color: #4D0632; */
   /* border-bottom: solid 1px #333333; */
 }
@@ -47,28 +48,53 @@ form {
   position: fixed;
   top: 0;
   right: 0;
-  width: 500px;
-  padding: 10px 50px;
-  background-color: #FDF2BC;
+  width: 400px;
+  padding: 15px 50px;
+  background-color: #4D0632;
   border: 2px solid #4D0632;
+  border-bottom-left-radius: 50px;
   transition-duration: .5s;
   z-index: 1
 }
 
+.active {
+  color: white;
+  background-color: #4D0632;
+}
+
+.login-box label {
+  color: white;
+}
+
 .login-box.hidden {
-  transform: translateY(-100%);
+  transform: translateX(100%);
 }
 
 .login-box.visible {
   transform: none;
 }
 
+.login-gap {
+  margin-top: 6px;
+}
 .login-buttons {
   margin-top: 20px;
 }
 
 .col-6 button {
   width: 100%;
+}
+
+.btn-primary {
+  background-color: #4D0632;
+  border: 1px solid #FEE098;
+  color: #FEE098;
+}
+
+.btn-primary:hover {
+  background-color: #FEE098;
+  border: 1px solid #FEE098;
+  color: #4D0632;
 }
 
 h2 {
