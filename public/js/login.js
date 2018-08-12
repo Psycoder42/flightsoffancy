@@ -42,7 +42,7 @@ class CredentialsForm extends React.Component {
     let passwordConfirm = null
     // But it is needed on the register
     if (!this.props.signin) {
-      passwordConfirm = <div className="row">
+      passwordConfirm = <div className="row login-gap">
         <div className="col-4">
           <label for="pass_confirm">Confirm:</label>
         </div>
@@ -63,7 +63,7 @@ class CredentialsForm extends React.Component {
               <input type="text" id="user" ref="user"/>
             </div>
           </div>
-          <div className="row">
+          <div className="row login-gap">
             <div className="col-4">
               <label for="pass">Password:</label>
             </div>
