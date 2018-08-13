@@ -15,7 +15,7 @@
 
 # If you must use the Rails seed file, uncomment the following
 # BE AWARE: This method could take a LONG time to run this way (it's importing over 100K rows - one at a time)
-# require 'csv'
+require 'csv'
 #
 # puts "Importing country data..."
 # CSV.foreach(Rails.root.join('db/countries.csv'), headers: true) do |row|
@@ -61,18 +61,18 @@
 #   Airline.create(
 #     id: row["id"].to_i,
 #     name: row["name"],
-#     callsign: row["callsign"]
+#     callsign: row["callsign"],
 #     iso_country: row["iso_country"]
 #   )
 # end
 # puts "Airline data import complete"
-#
+
 # puts "Importing route data..."
-# CSV.foreach(Rails.root.join('db/airlines.csv'), headers: true) do |row|
-#   Airline.create(
+# CSV.foreach(Rails.root.join('db/routes.csv'), headers: true) do |row|
+#   Route.create(
 #     id: row["id"].to_i,
 #     source: row["source"],
-#     destination: row["destination"]
+#     destination: row["destination"],
 #     airline_id: row["airline_id"].to_i
 #   )
 # end
