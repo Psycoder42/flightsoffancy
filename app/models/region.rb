@@ -6,14 +6,7 @@ class Region < ApplicationRecord
   COLS = ["code", "local_code", "name", "iso_country"]
   TYPES = [:string, :string, :string, :string]
 
-  # Override so that the correct columns for this model are known
-  def self.getColumns()
-    return COLS
-  end
-
-  # Override so that the correct columns types for this model are known
-  def self.getTypes()
-    return TYPES
-  end
+  # Define columns as they would be searched in a joined table
+  SEARCH_COLS = ["region_code", "region_ailias", "region_name", "region_country_code"]
 
 end

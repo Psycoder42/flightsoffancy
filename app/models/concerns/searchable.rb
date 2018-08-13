@@ -7,6 +7,33 @@ module Searchable
       return 50
     end
 
+    # Get the column names/types for normal table search
+    def getFieldInfo()
+      return getSearchFieldInfo(self::COLS)
+    end
+
+    # Get the column names when used in a join
+    def getJoinedFieldInfo()
+      return getSearchFieldInfo(self::SEARCH_COLS)
+    end
+
+    # Get the select string ailiases to be used with a join
+    def getAiliasedSelect()
+      colsSelects = []
+      idx = 0
+      cols = self::COLS
+      ailiases = self::SEARCH_COLS
+      while idx < cols.length do
+        sel = cols[idx];
+        if cols[idx] != ailiases[idx]
+          sel += " AS #{ailiases[idx]}"
+        end
+        colsSelects.push(sel)
+        idx += 1
+      end
+      return colsSelects.join(', ')
+    end
+
     # Common function to get the json response
     def get_json_response(results)
       return results.map { |result|
@@ -14,8 +41,8 @@ module Searchable
         # Pull each column from the result and add it to the object
         # Pay attention to the type when adding it
         idx = 0
-        cols = self.getColumns()
-        types = self.getTypes()
+        cols = self::COLS
+        types = self::TYPES
         while idx < cols.length do
           c = cols[idx]
           if types[idx] == :float
@@ -41,8 +68,8 @@ module Searchable
       # Add any column conditions that they passed
       # Pay attention to column type
       idx = 0
-      cols = self.getColumns()
-      types = self.getTypes()
+      cols = self::COLS
+      types = self::TYPES
       while idx < cols.length do
         c = cols[idx]
         if params[c] && !params[c].nil?
@@ -80,5 +107,23 @@ module Searchable
         return nil
       end
     end
+
+    private
+
+    # Get the column names/types for search
+    def getSearchFieldInfo(colNames)
+      colsInfo = []
+      idx = 0
+      colTypes = self::TYPES
+      while idx < colNames.length do
+        colsInfo.push({
+          name: colNames[idx],
+          type: colTypes[idx]
+        })
+        idx += 1
+      end
+      return colsInfo
+    end
+
   end
 end
