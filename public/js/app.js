@@ -7,12 +7,14 @@ class App extends React.Component {
     this.state = {
       curUser: null,
       showCredForm: false,
-      credFormIsSignIn: true
+      credFormIsSignIn: true,
+      searchResults: null
     }
     // Bind the custom functions
     this.login = this.login.bind(this)
     this.logout = this.logout.bind(this)
     this.register = this.register.bind(this)
+    this.search = this.search.bind(this)
     this.toggleCredForm = this.toggleCredForm.bind(this)
   }
 
@@ -31,6 +33,13 @@ class App extends React.Component {
       this.setState({ curUser: loggedInUser })
       this.toggleCredForm()
     }).catch(error => console.log(error))
+  }
+
+  // Function for handling search query
+  search(query) {
+    fetch('/airports/search?iso_country=' + query).then(res => res.json()).then(searchResults => {
+      this.setState({ searchResults: searchResults})
+    })
   }
 
   // Function for handling a user logging in
@@ -87,7 +96,9 @@ class App extends React.Component {
           <div className="row">
             <h1 className="welcome-title">Welcome{this.state.curUser ? ` ${this.state.curUser.username}` : ''}!</h1>
           </div>
-          <SearchBar />
+          <SearchBar
+            search={this.search}
+          />
         </div>
       </div>
     )
