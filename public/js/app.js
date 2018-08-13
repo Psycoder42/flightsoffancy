@@ -84,7 +84,10 @@ class App extends React.Component {
           onCancel={this.toggleCredForm}
         />
         <div className="container search">
-          <h1>Welcome{this.state.curUser ? ` ${this.state.curUser.username}` : ''}!</h1>
+          <div className="row">
+            <h1 className="welcome-title">Welcome{this.state.curUser ? ` ${this.state.curUser.username}` : ''}!</h1>
+          </div>
+          <SearchBar />
         </div>
       </div>
     )
