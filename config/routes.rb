@@ -10,4 +10,8 @@ Rails.application.routes.draw do
   get '/users/:username', to: 'users#show'
   put '/users/:username', to: 'users#update'
   delete '/users/:username', to: 'users#delete'
+
+  get '/countries/search', to: 'countries#search'
+  get '/regions/search', to: 'regions#search'
+  get '/airports/search', to: 'airports#search'
 end
