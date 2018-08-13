@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_12_141643) do
+ActiveRecord::Schema.define(version: 2018_08_13_143356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "airlines", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 127
+    t.string "callsign", limit: 63
+    t.string "iso_country", limit: 2
+  end
 
   create_table "airports", primary_key: "ident", id: :string, limit: 7, force: :cascade do |t|
     t.string "port_type", limit: 31
@@ -39,13 +45,23 @@ ActiveRecord::Schema.define(version: 2018_08_12_141643) do
     t.string "iso_country", limit: 2
   end
 
+  create_table "routes", id: :serial, force: :cascade do |t|
+    t.string "source", limit: 7
+    t.string "destination", limit: 7
+    t.integer "airline_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username", limit: 40
     t.string "password_digest"
     t.boolean "is_admin", default: false
   end
 
+  add_foreign_key "airlines", "countries", column: "iso_country", primary_key: "code"
   add_foreign_key "airports", "countries", column: "iso_country", primary_key: "code"
   add_foreign_key "airports", "regions", column: "iso_region", primary_key: "code"
   add_foreign_key "regions", "countries", column: "iso_country", primary_key: "code"
+  add_foreign_key "routes", "airlines"
+  add_foreign_key "routes", "airports", column: "destination", primary_key: "ident"
+  add_foreign_key "routes", "airports", column: "source", primary_key: "ident"
 end

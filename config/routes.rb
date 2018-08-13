@@ -14,4 +14,6 @@ Rails.application.routes.draw do
   get '/countries/search', to: 'countries#search'
   get '/regions/search', to: 'regions#search'
   get '/airports/search', to: 'airports#search'
+  get '/airlines/search', to: 'airlines#search'
+  get '/routes/search', to: 'routes#search'
 end
