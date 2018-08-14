@@ -73,6 +73,9 @@ class User < ApplicationRecord
   def self.delete_user(username)
     toDelete = User.find_by(username: username)
     if toDelete
+      # Delete all of this user's staved_records
+      SavedRecord.where(user_id: toDelete.id).destroy_all
+      # Delete the user
       return User.to_hash(toDelete.destroy)
     else
       return nil

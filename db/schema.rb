@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_13_143356) do
+ActiveRecord::Schema.define(version: 2018_08_14_152117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,12 @@ ActiveRecord::Schema.define(version: 2018_08_13_143356) do
     t.integer "airline_id"
   end
 
+  create_table "saved_records", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "ref_type", limit: 15
+    t.string "ref_key", limit: 15
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username", limit: 40
     t.string "password_digest"
@@ -64,4 +70,5 @@ ActiveRecord::Schema.define(version: 2018_08_13_143356) do
   add_foreign_key "routes", "airlines"
   add_foreign_key "routes", "airports", column: "destination", primary_key: "ident"
   add_foreign_key "routes", "airports", column: "source", primary_key: "ident"
+  add_foreign_key "saved_records", "users"
 end
