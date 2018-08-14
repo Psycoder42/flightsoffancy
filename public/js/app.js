@@ -81,7 +81,8 @@ class App extends React.Component {
   // Render this component
   render() {
     return (
-      <div className="container-fluid">
+      <main>
+      <div className="header container-fluid">
         <Navigation
           curUser={this.state.curUser}
           logout={this.logout}
@@ -102,6 +103,8 @@ class App extends React.Component {
           />
         </div>
       </div>
+      <SearchResults />
+      </main>
     )
   }
 }

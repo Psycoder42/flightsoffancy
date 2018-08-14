@@ -5,8 +5,27 @@ class Navigation extends React.Component {
     // Bind the custom functions
     this.doLogin = this.doLogin.bind(this)
     this.doRegister = this.doRegister.bind(this)
+    this.handleScroll = this.handleScroll.bind(this)
+    this.state = {
+      scrolled: false
+    }
+  }
+  // change navigation background color on scroll
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
   }
 
+  handleScroll() {
+    if (window.scrollY > 400) {
+      this.setState({
+        scrolled: true
+      })
+    } else {
+      this.setState({
+        scrolled: false
+      })
+    }
+  }
   // Function for handling the user clicking the Sign In link
   doLogin() {
     // Passing true maked is a log in box
@@ -20,6 +39,8 @@ class Navigation extends React.Component {
   }
 
   render() {
+
+    let backgroundColor = (this.state.scrolled ? "nav-color" : "")
     // Default register link
     let registerLink = <span className="login text-link" onClick={this.doRegister}>
       Register
@@ -39,7 +60,7 @@ class Navigation extends React.Component {
     }
     // Render the navigation
     return (
-      <div className="navigation row">
+      <div className={"navigation row "+backgroundColor}>
         <div className="col">
           <h1>Flights of Fancy</h1>
         </div>
