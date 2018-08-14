@@ -1,0 +1,378 @@
+code,local_code,name,iso_country
+AE-AZ,AZ,Abu Dhabi Emirate,AE
+AE-DU,DU,Dubai Emirate,AE
+AE-SH,SH,Sharjah Emirate,AE
+AL-11,11,Tirana County,AL
+AM-ER,ER,Yerevan (capital district),AM
+AR-B,B,Buenos Aires Province,AR
+AT-9,9,Vienna,AT
+AU-ACT,ACT,Australian Capital Territory,AU
+AU-NSW,NSW,New South Wales,AU
+AU-QLD,QLD,Queensland,AU
+AU-SA,SA,South Australia,AU
+AU-VIC,VIC,Victoria,AU
+AU-WA,WA,Western Australia,AU
+AZ-BA,BA,Baki,AZ
+BA-BIH,BIH,Federacija Bosna i Hercegovina,BA
+BE-BRU,BRU,Brussels-Capital Region,BE
+BE-WHT,WHT,Hainaut,BE
+BE-WLG,WLG,Liège,BE
+BG-02,02,Burgas Province,BG
+BG-03,03,Varna Province,BG
+BG-23,23,Sofia Province,BG
+BH-15,15,Muharraq Governorate,BH
+BN-BM,BM,Brunei-Muara District,BN
+BR-BA,BA,Bahia,BR
+BR-DF,DF,Distrito Federal,BR
+BR-MG,MG,Minas Gerais,BR
+BR-PA,PA,Pará,BR
+BR-PR,PR,Paraná,BR
+BR-RJ,RJ,Rio de Janeiro,BR
+BR-RN,RN,Rio Grande do Norte,BR
+BR-SC,SC,Santa Catarina,BR
+BR-SP,SP,São Paulo,BR
+BS-NP,NP,New Providence,BS
+DE-SN,SN,Saxony,DE
+BY-MI,MI,Minsk Voblast,BY
+BZ-BZ,BZ,Belize District,BZ
+CA-AB,AB,Alberta,CA
+CA-BC,BC,British Columbia,CA
+CA-MB,MB,Manitoba,CA
+CA-NL,NL,Newfoundland and Labrador,CA
+CA-NS,NS,Nova Scotia,CA
+CA-ON,ON,Ontario,CA
+CA-QC,QC,Quebec,CA
+CH-GE,GE,Canton of Geneva,CH
+CH-ZH,ZH,Canton of Zurich,CH
+CK-U-A,U-A,(unassigned),CK
+CL-RM,RM,Santiago Metropolitan Region,CL
+CN-11,11,Beijing Municipality,CN
+CN-12,12,Tianjin Municipality,CN
+CN-14,14,Shanxi Province,CN
+CN-15,15,Inner Mongolia Autonomous Region,CN
+CN-21,21,Liaoning Province,CN
+CN-23,23,Heilongjiang Province,CN
+CN-31,31,Shanghai Municipality,CN
+CN-32,32,Jiangsu Province,CN
+CN-33,33,Zhejiang Province,CN
+CN-35,35,Fujian Province,CN
+CN-37,37,Shandong Province,CN
+CN-41,41,Henan Province,CN
+CN-42,42,Hubei Province,CN
+CN-43,43,Hunan Province,CN
+CN-44,44,Guangdong Province,CN
+CN-45,45,Guangxi Autonomous Region,CN
+CN-46,46,Hainan Province,CN
+CN-50,50,Chongqing Municipality,CN
+CN-51,51,Sichuan Province,CN
+CN-52,52,Guizhou Province,CN
+CN-53,53,Yunnan Province,CN
+CN-61,61,Shaanxi Province,CN
+CN-65,65,Xinjiang Autonomous Region,CN
+CO-CUN,CUN,Cundinamarca Department,CO
+CR-G,G,Guanacaste,CR
+CU-03,03,Ciudad de la Habana,CU
+CU-04,04,Matanzas,CU
+CY-04,04,Larnarca District,CY
+CY-06,06,Paphos District,CY
+CZ-PR,PR,Prague (capital city),CZ
+DE-BE,BE,Berlin,DE
+DE-BR,BR,Brandenburg,DE
+DE-BW,BW,Baden-Württemberg,DE
+DE-BY,BY,Bavaria,DE
+DE-HB,HB,Bremen,DE
+DE-HE,HE,Hesse,DE
+DE-HH,HH,Hamburg,DE
+DE-NI,NI,Lower Saxony,DE
+DE-NW,NW,North Rhine-Westphalia,DE
+DE-RP,RP,Rhineland-Palatinate,DE
+DK-81,81,North Jutland,DK
+DK-83,83,South Denmark,DK
+DK-84,84,Capital Region,DK
+DO-01,01,Distrito Nacional,DO
+DO-11,11,La Altagracia Province,DO
+DZ-35,35,Boumerdès Province,DZ
+EC-P,P,Pichincha Province,EC
+EC-X,X,Cotopaxi Province,EC
+EE-37,37,Harju County,EE
+EG-BA,BA,Red Sea Governorate,EG
+EG-C,C,Cairo Governorate,EG
+EG-KN,KN,Qena Governorate,EG
+ES-AN,AN,Andalucía,ES
+ES-CN,CN,Canary Islands,ES
+ES-CT,CT,Catalonia,ES
+ES-GA,GA,Galicia,ES
+ES-M,M,Madrid,ES
+ES-PM,PM,Baleares,ES
+ES-V,V,Valencia,ES
+ET-AA,AA,Addis Ababa,ET
+FI-ES,ES,Southern Finland,FI
+FR-A,A,Alsace,FR
+FR-B,B,Aquitaine,FR
+FR-J,J,Île-de-France,FR
+FR-N,N,Midi-Pyrénées,FR
+FR-U,U,Provence-Alpes-Côte-d'Azur,FR
+FR-V,V,Rhône Alpes,FR
+GB-ENG,ENG,England,GB
+GB-NIR,NIR,Northern Ireland,GB
+GB-SCT,SCT,Scotland,GB
+GB-U-A,U-A,(unassigned),GB
+GB-WLS,WLS,Wales,GB
+GE-TB,TB,Tbilisi,GE
+GH-AA,AA,Greater Accra Region,GH
+GP-U-A,U-A,(unassigned),GP
+GR-54,54,Thessaloniki,GR
+GR-91,91,Irakleion,GR
+GR-A1,A1,Attica,GR
+GU-U-A,U-A,(unassigned),GU
+HK-U-A,U-A,(unassigned),HK
+HR-21,21,Zagreb (city),HR
+HU-PE,PE,Pest,HU
+ID-BA,BA,Bali,ID
+ID-BT,BT,Banten,ID
+ID-JI,JI,Jawa Timur,ID
+ID-PB,PB,West Papua,ID
+ID-SN,SN,Sulawesi Selatan,ID
+ID-SU,SU,Sumatera Utara,ID
+IE-C,C,County Cork,IE
+IE-CE,CE,County Clare,IE
+IE-D,D,County Dublin,IE
+IL-D,D,Southern District,IL
+IL-M,M,Central District,IL
+IN-DL,DL,Delhi,IN
+IN-GA,GA,Goa,IN
+IN-KA,KA,Karnataka,IN
+IN-KL,KL,Kerala,IN
+IN-MM,MM,Maharashtra,IN
+IN-PB,PB,Punjab,IN
+IN-TG,TG,Telangana,IN
+IN-TN,TN,Tamil Nadu,IN
+IN-WB,WB,West Bengal,IN
+IQ-BA,BA,Basra Governorate,IQ
+IQ-BG,BG,Baghdad Governorate,IQ
+IR-01,01,East Azarbaijan Province,IR
+IR-07,07,Tehran Province,IR
+IR-14,14,Fars Province,IR
+IR-30,30,Razavi Khorasan Province,IR
+IS-2,2,Southern Peninsula,IS
+IT-21,21,Piedmont,IT
+IT-25,25,Lombardy,IT
+IT-34,34,Veneto,IT
+IT-42,42,Liguria,IT
+IT-45,45,Emilia-Romagna,IT
+IT-52,52,Tuscany,IT
+IT-62,62,Lazio,IT
+IT-72,72,Campania,IT
+IT-75,75,Apulia,IT
+IT-82,82,Sicily,IT
+IT-88,88,Sardinia,IT
+JM-01,01,Kingston,JM
+JO-AM,AM,Amman Governorate,JO
+JP-01,01,Hokkaidō Prefecture,JP
+JP-12,12,Chiba Prefecture,JP
+JP-13,13,Tōkyō Prefecture,JP
+JP-22,22,Shizuoka Prefecture,JP
+JP-23,23,Aichi Prefecture,JP
+JP-27,27,Ōsaka Prefecture,JP
+JP-40,40,Fukuoka Prefecture,JP
+JP-46,46,Kagoshima Prefecture,JP
+JP-47,47,Okinawa Prefecture,JP
+KE-110,110,Nairobi Province,KE
+KE-300,300,Coast Province,KE
+KG-C,C,Chuy Region,KG
+KH-17,17,Siem Reab,KH
+KH-8,8,Kandaal,KH
+KR-11,11,Seoul Teugbyeolsi,KR
+KR-26,26,Busan Gwang'yeogsi,KR
+KR-28,28,Incheon Gwang'yeogsi,KR
+KR-41,41,Gyeonggido,KR
+KR-43,43,Chungcheongbugdo,KR
+KR-45,45,Jeonrabugdo,KR
+KR-46,46,Jeonranamdo,KR
+KR-49,49,Jejudo,KR
+KW-FA,FA,Al Farwaniyah Governorate,KW
+KY-U-A,U-A,(unassigned),KY
+KZ-AKM,AKM,Akmola Region,KZ
+KZ-ALM,ALM,Almaty Region,KZ
+KZ-KAR,KAR,Karaganda Region,KZ
+LB-JL,JL,Mount Lebanon Governorate,LB
+LK-1,1,Western Province,LK
+LK-3,3,Southern Province,LK
+LT-VL,VL,Vilnius County,LT
+LU-L,L,Luxembourg,LU
+LV-RIX,RIX,Riga (city),LV
+LY-TB,TB,Tripoli District,LY
+MA-CAS,CAS,Casablanca Province,MA
+ME-16,16,Podgorica Municipality,ME
+MM-04,04,Mandalay Division,MM
+MM-06,06,Yangon Division,MM
+MO-U-A,U-A,(unassigned),MO
+MR-NKC,NKC,Nouakchott Region,MR
+MT-25,25,Luqa,MT
+MU-VP,VP,Vacosa-Phoenix,MU
+MV-MLE,MLE,Malé Capital,MV
+MX-BCN,BCN,Baja California,MX
+MX-BCS,BCS,Baja California Sur,MX
+MX-DIF,DIF,Distrito Federal,MX
+MX-GRO,GRO,Guerrero,MX
+MX-JAL,JAL,Jalisco,MX
+MX-NLE,NLE,Nuevo Leon,MX
+MX-ROO,ROO,Quintana Roo,MX
+MX-SON,SON,Sonora,MX
+MY-14,14,Wilayah Persekutuan Kuala Lumpur,MY
+NG-AK,AK,Akwa Ibom,NG
+NG-FC,FC,Abuja Capital Territory,NG
+NG-KN,KN,Kano,NG
+NG-LA,LA,Lagos,NG
+NL-LI,LI,Limburg,NL
+NL-NB,NB,Noord-Brabant,NL
+NL-NH,NH,Noord-Holland,NL
+NO-02,02,Akershus,NO
+NO-11,11,Rogaland,NO
+NO-12,12,Hordaland,NO
+NO-17,17,Nord-Trøndelag,NO
+NO-18,18,Nordland,NO
+NO-19,19,Troms,NO
+NZ-AUK,AUK,Auckland Region,NZ
+NZ-CAN,CAN,Canterbury Region,NZ
+NZ-WGN,WGN,Wellington Region,NZ
+OM-BA,BA,Al Batinah Governorate,OM
+OM-MA,MA,Masqat Governorate,OM
+OM-WU,WU,Al Wusta Governorate,OM
+PA-8,8,Panamá Province,PA
+PE-CUS,CUS,Cuzco Region,PE
+PE-LIM,LIM,Lima Region,PE
+PG-NCD,NCD,National Capital District (Port Moresby),PG
+PH-CEB,CEB,Cebu Province,PH
+PH-DAV,DAV,Davao Province,PH
+PH-MSR,MSR,Misamis Oriental Province,PH
+PH-PAM,PAM,Pampanga Province,PH
+PH-U-A,U-A,(unassigned),PH
+PK-IS,IS,Islamabad Capital Territory,PK
+PK-PB,PB,Punjab,PK
+PL-DS,DS,Lower Silesia,PL
+PL-MA,MA,Lesser Poland,PL
+PL-MZ,MZ,Masovia,PL
+PL-PM,PM,Pomerania,PL
+PL-SL,SL,Silesia,PL
+PL-WP,WP,Greater Poland,PL
+PR-U-A,U-A,(unassigned),PR
+PT-08,08,Faro District,PT
+PT-11,11,Lisbon District,PT
+PT-13,13,Oporto District,PT
+PT-20,20,Autonomous Region of Azores,PT
+QA-DA,DA,Ad Dawhah Municipality,QA
+RO-B,B,Bucureşti,RO
+RS-00,00,Beograd (city),RS
+RU-BA,BA,Republic of Bashkortostan,RU
+RU-CE,CE,Chechen Republic,RU
+RU-KDA,KDA,Krasnodar Krai,RU
+RU-KHA,KHA,Khabarovsk Krai,RU
+RU-KYA,KYA,Krasnoyarsk Krai,RU
+RU-MOS,MOS,Moscow Oblast,RU
+RU-NVS,NVS,Novosibirsk Oblast,RU
+RU-ROS,ROS,Rostov Oblast,RU
+RU-SAM,SAM,Samara Oblast,RU
+RU-SPE,SPE,Saint Petersburg (city),RU
+RU-SVE,SVE,Sverdlovsk Oblast,RU
+RU-TA,TA,Republic of Tatarstan,RU
+SA-01,01,Riyadh Region,SA
+SA-02,02,Makkah Region,SA
+SA-03,03,Al Madinah Region,SA
+SA-04,04,Ash Sharqiyah Region,SA
+SD-03,03,Khartoum State,SD
+SE-AB,AB,Stockholms län,SE
+SE-BD,BD,Norrbottena län,SE
+SE-M,M,Skåne län,SE
+SE-Q,Q,Västra Götalands län,SE
+SG-04,04,South East,SG
+SI-061,061,Ljubljana,SI
+SK-BL,BL,Bratislava,SK
+SN-DK,DK,Dakar Region,SN
+SS-17,17,Central Equatoria State,SS
+SV-PA,PA,La Paz,SV
+SX-U-A,U-A,(unassigned),SX
+SY-DI,DI,Damascus Governorate,SY
+SY-HL,HL,Aleppo Governorate,SY
+SY-LA,LA,Latakia Governorate,SY
+TH-10,10,Bangkok Province,TH
+TH-50,50,Chiang Mai Province,TH
+TH-83,83,Phuket Province,TH
+TN-11,11,Tunis Governorate,TN
+TN-51,51,Sousse Governorate,TN
+TR-01,01,Adana Province,TR
+TR-06,06,Ankara Province,TR
+TR-07,07,Antalya Province,TR
+TR-25,25,Erzurum Province,TR
+TR-27,27,Gaziantep Province,TR
+TR-32,32,Isparta Province,TR
+TR-34,34,İstanbul Province,TR
+TR-35,35,İzmir Province,TR
+TR-48,48,Muğla Province,TR
+TR-61,61,Trabzon Province,TR
+TW-KHH,KHH,Kaohsiung (municipality),TW
+TW-TAO,TAO,Taoyuan County,TW
+TW-X-KM,X-KM,Kinmen County,TW
+TZ-02,02,Dar-es-Salaam Region,TZ
+UA-32,32,Kiev,UA
+UA-43,43,Crimea,UA
+UA-51,51,Odessa,UA
+UA-63,63,Kharkiv,UA
+US-AK,AK,Alaska,US
+US-AL,AL,Alabama,US
+US-AR,AR,Arkansas,US
+US-AZ,AZ,Arizona,US
+US-CA,CA,California,US
+US-CO,CO,Colorado,US
+US-CT,CT,Connecticut,US
+US-DC,DC,District of Columbia,US
+US-DE,DE,Delaware,US
+US-FL,FL,Florida,US
+US-GA,GA,Georgia,US
+US-HI,HI,Hawaii,US
+US-IA,IA,Iowa,US
+US-ID,ID,Idaho,US
+US-IL,IL,Illinois,US
+US-IN,IN,Indiana,US
+US-KS,KS,Kansas,US
+US-KY,KY,Kentucky,US
+US-LA,LA,Louisiana,US
+US-MA,MA,Massachusetts,US
+US-MD,MD,Maryland,US
+US-ME,ME,Maine,US
+US-MI,MI,Michigan,US
+US-MN,MN,Minnesota,US
+US-MO,MO,Missouri,US
+US-MS,MS,Mississippi,US
+US-MT,MT,Montana,US
+US-NC,NC,North Carolina,US
+US-NH,NH,New Hampshire,US
+US-NJ,NJ,New Jersey,US
+US-NM,NM,New Mexico,US
+US-NV,NV,Nevada,US
+US-NY,NY,New York,US
+US-OH,OH,Ohio,US
+US-OK,OK,Oklahoma,US
+US-OR,OR,Oregon,US
+US-PA,PA,Pennsylvania,US
+US-SC,SC,South Carolina,US
+US-TN,TN,Tennessee,US
+US-TX,TX,Texas,US
+US-UT,UT,Utah,US
+US-VA,VA,Virginia,US
+US-WA,WA,Washington,US
+US-WI,WI,Wisconsin,US
+US-WV,WV,West Virginia,US
+US-WY,WY,Wyoming,US
+UY-CA,CA,Canelones Department,UY
+UZ-TO,TO,Toshkent,UZ
+VE-B,B,Anzoategui,VE
+VE-X,X,Vargas,VE
+VN-15,15,Ha Tay Province,VN
+VN-23,23,Ha Tinh Province,VN
+VN-60,60,Da Nang Municipality,VN
+XK-01,01,Pristina District,XK
+ZA-GT,GT,Gauteng,ZA
+ZA-NL,NL,Kwazulu-Natal,ZA
+ZA-WC,WC,Western Cape,ZA
+ZM-09,09,Lusaka Province,ZM
