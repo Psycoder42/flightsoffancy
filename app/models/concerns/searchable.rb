@@ -9,29 +9,18 @@ module Searchable
 
     # Get the column names/types for normal table search
     def getFieldInfo()
-      return getSearchFieldInfo(self::COLS)
-    end
-
-    # Get the column names when used in a join
-    def getJoinedFieldInfo()
-      return getSearchFieldInfo(self::SEARCH_COLS)
-    end
-
-    # Get the select string ailiases to be used with a join
-    def getAiliasedSelect()
-      colsSelects = []
+      colsInfo = []
       idx = 0
-      cols = self::COLS
-      ailiases = self::SEARCH_COLS
-      while idx < cols.length do
-        sel = cols[idx];
-        if cols[idx] != ailiases[idx]
-          sel += " AS #{ailiases[idx]}"
-        end
-        colsSelects.push(sel)
+      colNames = self::COLS
+      colTypes = self::TYPES
+      while idx < colNames.length do
+        colsInfo.push({
+          name: colNames[idx],
+          type: colTypes[idx]
+        })
         idx += 1
       end
-      return colsSelects.join(', ')
+      return colsInfo
     end
 
     # Common function to get the json response
@@ -76,8 +65,8 @@ module Searchable
           # The user provided a value for this column
           if types[idx] == :float || types[idx] == :integer
             # Numerics are straight equals
-            where_clause.push("#{c} = ?")
             terms.push(params[c])
+            where_clause.push("#{c} = ?")
           elsif types[idx] == :boolean
             # Booleans just need column name or not column name
             if ActiveRecord::Type::Boolean.new.cast(params[c])
@@ -87,8 +76,8 @@ module Searchable
             end
           else
             # Strings should be lowercased and use LIKE
-            where_clause.push("lower(#{c}) LIKE ?")
             terms.push(params[c].downcase)
+            where_clause.push("lower(#{c}) LIKE ?")
           end
         end
         idx += 1
@@ -106,23 +95,6 @@ module Searchable
         # nothing, return a nil so that the controller will inform the client
         return nil
       end
-    end
-
-    private
-
-    # Get the column names/types for search
-    def getSearchFieldInfo(colNames)
-      colsInfo = []
-      idx = 0
-      colTypes = self::TYPES
-      while idx < colNames.length do
-        colsInfo.push({
-          name: colNames[idx],
-          type: colTypes[idx]
-        })
-        idx += 1
-      end
-      return colsInfo
     end
 
   end
