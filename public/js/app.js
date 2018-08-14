@@ -8,7 +8,8 @@ class App extends React.Component {
       curUser: null,
       showCredForm: false,
       credFormIsSignIn: true,
-      searchResults: null
+      searchResults: null,
+      paginateVal: 5
     }
     // Bind the custom functions
     this.login = this.login.bind(this)
@@ -16,6 +17,7 @@ class App extends React.Component {
     this.register = this.register.bind(this)
     this.search = this.search.bind(this)
     this.toggleCredForm = this.toggleCredForm.bind(this)
+    this.changePaginate = this.changePaginate.bind(this)
   }
 
   // Function for handling a new user registration
@@ -35,9 +37,14 @@ class App extends React.Component {
     }).catch(error => console.log(error))
   }
 
+  changePaginate(value) {
+    this.setState({ paginateVal: value})
+    console.log(this.state.paginateVal);
+  }
+
   // Function for handling search query
   search(query) {
-    fetch('/flights/search?' + query).then(res => res.json()).then(searchResults => {
+    fetch(`/flights/search?${query}&r=${this.state.paginateVal}`).then(res => res.json()).then(searchResults => {
       this.setState({ searchResults: searchResults})
       // console.log(this.state.searchResults);
     })
@@ -108,6 +115,8 @@ class App extends React.Component {
               this.state.searchResults ?
               <SearchResults
                 searchResults={this.state.searchResults}
+                paginateVal={this.state.paginateVal}
+                changePaginate={this.changePaginate}
               />
               : ''
             }

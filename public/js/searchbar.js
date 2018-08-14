@@ -21,7 +21,7 @@ class SearchBar extends React.Component {
     }
     query = encodeURI(query)
     this.props.search(query)
-    console.log(query);
+    // console.log(query);
     event.target.reset()
   }
 

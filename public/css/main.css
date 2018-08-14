@@ -139,6 +139,17 @@ input {
   width: 100%;
 }
 
+select {
+  border-radius: 5px;
+  width: 100%;
+  padding-left: 10px;
+}
+
+.views-label {
+  margin: 0;
+  color: white;
+}
+
 .text-link {
   cursor: pointer;
   margin: 0 1em;

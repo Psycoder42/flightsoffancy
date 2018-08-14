@@ -1,7 +1,29 @@
 class SearchResults extends React.Component {
+  constructor(props) {
+    super(props)
+    this.submitPaginate = this.submitPaginate.bind(this)
+  }
+  submitPaginate(event) {
+    this.props.changePaginate(event.target.value)
+  }
+
   render() {
     return (
       <div className="container result-list">
+        <div className="row paginate-results d-flex align-items-center">
+          <div className="col-2 offset-9 text-right">
+            <p className="views-label">Results Per Page:</p>
+          </div>
+          <div className="col-1">
+            <select name="views" onChange={this.submitPaginate}>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+        </div>
         <div className="row result-title d-flex align-items-center">
           <div className="col-2">
             <p>Airline</p>
