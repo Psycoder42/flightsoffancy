@@ -34,6 +34,8 @@ h1 {
 
 label {
   margin: 0;
+  width: 100%;
+  text-align: right;
 }
 
 .search-bar {
@@ -177,8 +179,8 @@ input {
 .extended-fields {
   margin: 15px 0;
   padding: 15px 0;
-  border-top: 5px solid #FEE098;
-  border-bottom: 5px solid #FEE098;
+  border-top: 1px solid #FEE098;
+  border-bottom: 1px solid #FEE098;
 }
 
 .extended-fields.hidden {

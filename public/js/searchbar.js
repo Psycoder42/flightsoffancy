@@ -76,20 +76,90 @@ class SearchBar extends React.Component {
           </div>
           <div className={"extended-fields "+visibility}>
             <div className="row m-0">
-              <div className="p-2 text-right d-flex align-items-center">
+              <div className="col-2 p-2 d-flex align-items-center">
                 <label for="airline_name">Airline:</label>
               </div>
-              <div className="p-2 flex-grow-1">
+              <div className="col-4 p-2">
                 <input type="text" className="search-input" id="airline_name"  ref="airline_name"
                 placeholder="Airline Name"
                 />
               </div>
-              <div className="p-2 text-right d-flex align-items-center">
-                <label for="airline_name">Airline:</label>
+              <div className="col-2 p-2 d-flex align-items-center">
+                <label for="airline_country">Airline Country:</label>
               </div>
-              <div className="p-2 flex-grow-1">
-                <input type="text" className="search-input" id="airline_name"  ref="airline_name"
-                placeholder="Airline Name"
+              <div className="col-4 p-2">
+                <input type="text" className="search-input" id="airline_country"  ref="airline_country"
+                placeholder="Airline Country"
+                />
+              </div>
+            </div>
+            <div className="row m-0">
+              <div className="col-2 p-2 d-flex align-items-center">
+                <label for="source_airport_region">From Region:</label>
+              </div>
+              <div className="col-4 p-2">
+                <input type="text" className="search-input" id="source_airport_region"  ref="source_airport_region"
+                placeholder="Origin Airport Region"
+                />
+              </div>
+              <div className="col-2 p-2 d-flex align-items-center">
+                <label for="dest_airport_region">To Region:</label>
+              </div>
+              <div className="col-4 p-2">
+                <input type="text" className="search-input" id="dest_airport_region"  ref="dest_airport_region"
+                placeholder="Destination Airport Region"
+                />
+              </div>
+            </div>
+            <div className="row m-0">
+              <div className="col-2 p-2 d-flex align-items-center">
+                <label for="source_airport_country">From Country:</label>
+              </div>
+              <div className="col-4 p-2">
+                <input type="text" className="search-input" id="source_airport_country"  ref="source_airport_country"
+                placeholder="Origin Airport Country"
+                />
+              </div>
+              <div className="col-2 p-2 d-flex align-items-center">
+                <label for="dest_airport_country">To Country:</label>
+              </div>
+              <div className="col-4 p-2">
+                <input type="text" className="search-input" id="dest_airport_country"  ref="dest_airport_country"
+                placeholder="Destination Airport Country"
+                />
+              </div>
+            </div>
+            <div className="row m-0">
+              <div className="col-2 p-2 d-flex align-items-center">
+                <label for="source_airport_id">From Airport ID:</label>
+              </div>
+              <div className="col-1 p-2">
+                <input type="text" className="search-input" id="source_airport_id"  ref="source_airport_id"
+                placeholder="ID"
+                />
+              </div>
+              <div className="col-2 p-2 d-flex align-items-center">
+                <label for="source_iata_code">From IATA:</label>
+              </div>
+              <div className="col-1 p-2">
+                <input type="text" className="search-input" id="source_ata_code"  ref="source_iata_code"
+                placeholder="IATA"
+                />
+              </div>
+              <div className="col-2 p-2 d-flex align-items-center">
+                <label for="dest_airport_id">To Airport ID:</label>
+              </div>
+              <div className="col-1 p-2">
+                <input type="text" className="search-input" id="dest_airport_id"  ref="dest_airport_id"
+                placeholder="ID"
+                />
+              </div>
+              <div className="col-2 p-2 d-flex align-items-center">
+                <label for="dest_iata_code">To IATA:</label>
+              </div>
+              <div className="col-1 p-2">
+                <input type="text" className="search-input" id="dest_ata_code"  ref="dest_iata_code"
+                placeholder="IATA"
                 />
               </div>
             </div>
