@@ -37,7 +37,7 @@ class App extends React.Component {
 
   // Function for handling search query
   search(query) {
-    fetch('/airports/search?name=' + query).then(res => res.json()).then(searchResults => {
+    fetch('/flights/search?' + query).then(res => res.json()).then(searchResults => {
       this.setState({ searchResults: searchResults})
       console.log(this.state.searchResults);
     })

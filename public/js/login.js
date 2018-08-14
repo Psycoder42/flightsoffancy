@@ -47,7 +47,9 @@ class CredentialsForm extends React.Component {
           <label for="pass_confirm">Confirm:</label>
         </div>
         <div className="col-8">
-          <input type="password" id="pass_confirm" ref="pass_confirm"/>
+          <input type="password" id="pass_confirm" ref="pass_confirm"
+          placeholder="Repeat Password"
+          />
         </div>
       </div>
     }
@@ -60,7 +62,9 @@ class CredentialsForm extends React.Component {
               <label for="user">Username:</label>
             </div>
             <div className="col-8">
-              <input type="text" id="user" ref="user"/>
+              <input type="text" id="user" ref="user"
+              placeholder="Username"
+              />
             </div>
           </div>
           <div className="row login-gap">
@@ -68,7 +72,9 @@ class CredentialsForm extends React.Component {
               <label for="pass">Password:</label>
             </div>
             <div className="col-8">
-              <input type="password" id="pass" ref="pass"/>
+              <input type="password" id="pass" ref="pass"
+              placeholder="Password"
+              />
             </div>
           </div>
           {passwordConfirm}

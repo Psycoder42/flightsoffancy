@@ -26,17 +26,30 @@ h1 {
   height: 60vh;
 }
 
+label {
+  margin: 0;
+}
+
 .search-bar {
   width: 60vw;
-  padding: 10px 30px;
+  padding: 15px 30px;
   background-color: #4D0632;
   border-radius: 5px;
   color: white;
 }
 
+.btn-search {
+  min-width: 100px;
+}
+
+.search-input {
+  height: 100%;
+}
+
 .welcome-title {
   margin-bottom: 20px;
 }
+
 .login {
   font-weight: 600;
   color: #4D0632;
@@ -63,11 +76,6 @@ form {
   z-index: 1
 }
 
-.active {
-  color: white;
-  background-color: #4D0632;
-}
-
 .login-box label {
   color: white;
 }
@@ -83,6 +91,7 @@ form {
 .login-gap {
   margin-top: 6px;
 }
+
 .login-buttons {
   margin-top: 20px;
 }
@@ -110,6 +119,7 @@ h2 {
 }
 
 input {
+  padding-left: 5px;
   width: 100%;
 }
 
@@ -120,4 +130,39 @@ input {
 
 .col.spacer {
   flex-grow: 2;
+}
+
+.tabs {
+  margin-left: -10px;
+}
+
+.tab-item {
+  padding: 5px;
+  color: #4D0632;
+  font-weight: 600;
+  margin: 15px;
+}
+
+.tab-item span {
+  color: #4D0632;
+  font-size: 18px;
+}
+
+.tab-item span:hover, .adv-search p:hover {
+  cursor: pointer;
+}
+.tab-item.active {
+  /* text-transform: uppercase; */
+  border-bottom: 5px solid #4D0632;
+  font-weight: 800;
+}
+
+.adv-search {
+  padding: 15px;
+  color: #4D0632;
+  font-weight: 600;
+}
+
+.adv-search p {
+  margin: 0;
 }
