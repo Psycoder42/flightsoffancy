@@ -32,7 +32,7 @@ class Search
       # Run the select
       if where
         # The next placeholder value to use
-        nextVal = where[:user_values].length
+        nextVal = (where[:user_values].length + 1)
         # SQL will have user input so we want to wrap it in a one-time use prepared statement
         prepared_name = "place_select_#{SecureRandom.hex(10)}"
         places_sql = "SELECT * FROM ( #{self.getPlacesQuery()} ) AS places"
@@ -71,7 +71,7 @@ class Search
       # Run the select
       if where
         # The next placeholder value to use
-        nextVal = where[:user_values].length
+        nextVal = (where[:user_values].length + 1)
         # SQL will have user input so we want to wrap it in a one-time use prepared statement
         prepared_name = "flight_select_#{SecureRandom.hex(10)}"
         flights_sql = "SELECT * FROM ( #{self.getFlightsQuery()} ) AS flights"
