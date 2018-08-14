@@ -39,7 +39,7 @@ class App extends React.Component {
   search(query) {
     fetch('/flights/search?' + query).then(res => res.json()).then(searchResults => {
       this.setState({ searchResults: searchResults})
-      console.log(this.state.searchResults);
+      // console.log(this.state.searchResults);
     })
   }
 
@@ -82,28 +82,36 @@ class App extends React.Component {
   render() {
     return (
       <main>
-      <div className="header container-fluid">
-        <Navigation
-          curUser={this.state.curUser}
-          logout={this.logout}
-          toggleCredForm={this.toggleCredForm}
-        />
-        <CredentialsForm
-          signin={this.state.credFormIsSignIn}
-          visible={this.state.showCredForm}
-          onSubmit={this.state.credFormIsSignIn ? this.login : this.register}
-          onCancel={this.toggleCredForm}
-        />
-        <div className="container search">
-          <div className="row">
-            <h1 className="welcome-title">Welcome{this.state.curUser ? ` ${this.state.curUser.username}` : ''}!</h1>
-          </div>
-          <SearchBar
-            search={this.search}
+        <div className="header container-fluid">
+          <Navigation
+            curUser={this.state.curUser}
+            logout={this.logout}
+            toggleCredForm={this.toggleCredForm}
           />
+          <CredentialsForm
+            signin={this.state.credFormIsSignIn}
+            visible={this.state.showCredForm}
+            onSubmit={this.state.credFormIsSignIn ? this.login : this.register}
+            onCancel={this.toggleCredForm}
+          />
+          <div className="container search">
+            <div className="row">
+              <h1 className="welcome-title">Welcome{this.state.curUser ? ` ${this.state.curUser.username}` : ''}!</h1>
+            </div>
+            <SearchBar
+              search={this.search}
+            />
+          </div>
         </div>
-      </div>
-      <SearchResults />
+        <div className="results container-fluid">
+            {
+              this.state.searchResults ?
+              <SearchResults
+                searchResults={this.state.searchResults}
+              />
+              : ''
+            }
+        </div>
       </main>
     )
   }

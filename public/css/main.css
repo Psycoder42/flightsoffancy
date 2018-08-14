@@ -1,3 +1,7 @@
+main {
+  background-color: #4D0632;
+}
+
 .header.container-fluid {
   background: url(https://i.imgur.com/6MFuLBg.jpg) no-repeat;
   background-size: cover;
@@ -11,6 +15,7 @@ h1 {
 }
 
 .navigation {
+  z-index: 999;
   position: fixed;
   top: 0;
   width: 100%;
@@ -160,6 +165,7 @@ input {
 .tab-item span:hover, .adv-search p:hover {
   cursor: pointer;
 }
+
 .tab-item.active {
   border-bottom: 5px solid #4D0632;
   font-weight: 800;
@@ -188,6 +194,34 @@ input {
 }
 
 .results {
-  height: 800px;
-  background-color: #4D0632;
+  min-height: 50px;
+  color: white;
+}
+
+.result-list {
+  padding: 20px 30px 50px;
+  margin-top: 30px;
+}
+
+.result-title {
+  text-align: center;
+  padding: 20px;
+  color: #FEE098;
+  border-bottom: 3px solid #FEE098;
+}
+
+.result-title p {
+  margin: 0;
+}
+
+.single-result {
+  text-align: center;
+  padding: 20px;
+  border-bottom: 1px dotted #FEE098;
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  right: 0;
 }
