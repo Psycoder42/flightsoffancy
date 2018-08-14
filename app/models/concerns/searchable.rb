@@ -83,12 +83,12 @@ module Searchable
         idx += 1
       end
       begin
-        max = self.getMaxResults()
+        lo = self.getSqlLimitAndOffset(params)
         # Try to perfom the search based on the user criteria
         if where_clause.length > 0
-          return self.where(where_clause.join(' AND '), *terms).limit(max)
+          return self.where(where_clause.join(' AND '), *terms).limit(lo[0]).offset(lo[1])
         else
-          return self.where('true').limit(max)
+          return self.where('true').limit(lo[0]).offset(lo[1])
         end
       rescue
         # Something went wrong, instead of throwing an error and doing

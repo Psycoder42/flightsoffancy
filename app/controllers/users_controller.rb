@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   def all
     if admin()
-      render json: User.all_users()
+      render json: User.all_users(params)
     else
       render status: 401, json: nil
     end

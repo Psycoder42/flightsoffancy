@@ -1,4 +1,7 @@
 class Search
+  # Include the common search functionality
+  include Pagable
+
   # Places column info
   PLACES_AIRPORT_COLS = Selector.new("airports",
     ["ident", "port_type", "name", "latitude_deg", "longitude_deg", "municipality", "iata_code", "local_code"],
@@ -23,24 +26,28 @@ class Search
   # Search for places results
   def self.search_places(params)
     begin
+      pageValues = self.getSqlLimitAndOffset(params)
       # See if there is user input to incorporate
       where = self.buildWhereClause(self.getPlacesTypes(), params)
       # Run the select
       if where
+        # The next placeholder value to use
+        nextVal = where[:user_values].length
         # SQL will have user input so we want to wrap it in a one-time use prepared statement
         prepared_name = "place_select_#{SecureRandom.hex(10)}"
         places_sql = "SELECT * FROM ( #{self.getPlacesQuery()} ) AS places"
         places_sql += where[:where_clause]
-        places_sql += " LIMIT 50"
+        places_sql += " LIMIT $#{nextVal} OFFSET $#{nextVal+1}"
         # Prepare the statement
         ActiveRecord::Base.connection.raw_connection.prepare(prepared_name, places_sql)
         # Run it
-        results = ActiveRecord::Base.connection.raw_connection.exec_prepared(prepared_name, where[:user_values])
+        sqlValues = [*where[:user_values], *pageValues]
+        results = ActiveRecord::Base.connection.raw_connection.exec_prepared(prepared_name, sqlValues)
         # Clean up the prepared statement
         ActiveRecord::Base.connection.raw_connection.exec("DEALLOCATE #{prepared_name}")
       else
         # No user input so we can use the reusible prepared statement
-        results = ActiveRecord::Base.connection.raw_connection.exec_prepared('place_select')
+        results = ActiveRecord::Base.connection.raw_connection.exec_prepared('place_select', pageValues)
       end
       return self.convertResults(results, self.getPlacesTypes())
     rescue
@@ -58,24 +65,28 @@ class Search
   # Search for flights results
   def self.search_flights(params)
     begin
+      pageValues = self.getSqlLimitAndOffset(params)
       # See if there is user input to incorporate
       where = self.buildWhereClause(self.getFlightsTypes(), params)
       # Run the select
       if where
+        # The next placeholder value to use
+        nextVal = where[:user_values].length
         # SQL will have user input so we want to wrap it in a one-time use prepared statement
         prepared_name = "flight_select_#{SecureRandom.hex(10)}"
         flights_sql = "SELECT * FROM ( #{self.getFlightsQuery()} ) AS flights"
         flights_sql += where[:where_clause]
-        flights_sql += " LIMIT 50"
+        flights_sql += " LIMIT $#{nextVal} OFFSET $#{nextVal+1}"
         # Prepare the statement
         ActiveRecord::Base.connection.raw_connection.prepare(prepared_name, flights_sql)
         # Run it
-        results = ActiveRecord::Base.connection.raw_connection.exec_prepared(prepared_name, where[:user_values])
+        sqlValues = [*where[:user_values], *pageValues]
+        results = ActiveRecord::Base.connection.raw_connection.exec_prepared(prepared_name, sqlValues)
         # Clean up the prepared statement
         ActiveRecord::Base.connection.raw_connection.exec("DEALLOCATE #{prepared_name}")
       else
         # No user input so we can use the reusible prepared statement
-        results = ActiveRecord::Base.connection.raw_connection.exec_prepared('flight_select')
+        results = ActiveRecord::Base.connection.raw_connection.exec_prepared('flight_select', pageValues)
       end
       return self.convertResults(results, self.getFlightsTypes())
     rescue
@@ -200,7 +211,7 @@ class Search
     return sql_string.strip().gsub(/\s+/, ' ')
   end
 
-  # Generate the select for the places search
+  # Generate the select for the flights search
   def self.getFlightsSelect()
     selPieces = []
     FLIGHTS_SELECTORS.each do |selector|
@@ -211,7 +222,7 @@ class Search
     return selPieces.join(', ')
   end
 
-  # Generate the types for the places search
+  # Generate the types for the flights search
   def self.getFlightsTypes()
     typeInfo = []
     FLIGHTS_SELECTORS.each do |selector|
@@ -241,16 +252,16 @@ class Search
     return sql_string.strip().gsub(/\s+/, ' ')
   end
 
-  # Prepare the unfiltered place select statement
+  # Prepare the unfiltered (except for paging) place select statement
   begin
-    ActiveRecord::Base.connection.raw_connection.prepare('place_select', "#{self.getPlacesQuery()} LIMIT 50")
+    ActiveRecord::Base.connection.raw_connection.prepare('place_select', "#{self.getPlacesQuery()} LIMIT $1 OFFSET $2")
   rescue PG::DuplicatePstatement => e
     # This is fine... it just means we already prepared it
   end
 
-  # Prepare the unfiltered flight select statement
+  # Prepare the unfiltered (except for paging) flight select statement
   begin
-    ActiveRecord::Base.connection.raw_connection.prepare('flight_select', "#{self.getFlightsQuery()} LIMIT 50")
+    ActiveRecord::Base.connection.raw_connection.prepare('flight_select', "#{self.getFlightsQuery()} LIMIT $1 OFFSET $2")
   rescue PG::DuplicatePstatement => e
     # This is fine... it just means we already prepared it
   end
