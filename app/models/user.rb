@@ -7,16 +7,15 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6, maximum: 40 }
 
-  # Get a connection to the database
-  if(ENV['DATABASE_URL'])
-    uri = URI.parse(ENV['DATABASE_URL'])
-    DB = PG.connect(uri.hostname, uri.port, nil, nil, uri.path[1..-1], uri.user, uri.password)
-  else
-    DB = PG.connect(dbname: 'flightsoffancy_development')
-  end
+  # Include the common search functionality
+  include Pagable
 
   # Use prepared statememnts for security
-  DB.prepare('all', "SELECT * FROM USERS")
+  begin
+    ActiveRecord::Base.connection.raw_connection.prepare('all', "SELECT * FROM USERS LIMIT $1 OFFSET $2")
+  rescue PG::DuplicatePstatement => e
+    # This is fine... it just means we already prepared it
+  end
 
   # Common function to get the json response
   def self.get_json_response(results)
@@ -40,8 +39,9 @@ class User < ApplicationRecord
   end
 
   # Return all the users
-  def self.all_users
-    results = DB.exec_prepared('all')
+  def self.all_users(opts)
+    page_info = self.getSqlLimitAndOffset(opts)
+    results = ActiveRecord::Base.connection.raw_connection.exec_prepared('all', page_info)
     return User.get_json_response(results)
   end
 
@@ -73,6 +73,9 @@ class User < ApplicationRecord
   def self.delete_user(username)
     toDelete = User.find_by(username: username)
     if toDelete
+      # Delete all of this user's staved_records
+      SavedRecord.where(user_id: toDelete.id).destroy_all
+      # Delete the user
       return User.to_hash(toDelete.destroy)
     else
       return nil

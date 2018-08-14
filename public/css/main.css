@@ -1,4 +1,229 @@
+main {
+  background-color: #4D0632;
+}
+
+.header.container-fluid {
+  background: url(https://i.imgur.com/6MFuLBg.jpg) no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+h1 {
+  font-size: 28px;
+  font-family: 'Lobster', cursive;
+  color: #4D0632;
+}
+
+.navigation {
+  z-index: 4;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: transparent;
+  padding: 15px;
+  align-items: center;
+}
+
+.navigation.nav-color {
+  background-color: #FEE098;
+  -webkit-box-shadow: inset 0px -2px 2px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 0px -2px 2px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0px -2px 2px 0px rgba(0, 0, 0, 0.5);
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 80vh;
+}
+
+label {
+  margin: 0;
+  width: 100%;
+  text-align: right;
+}
+
+.search-bar {
+  width: 60vw;
+  padding: 15px 30px;
+  background-color: #4D0632;
+  border-radius: 5px;
+  color: white;
+}
+
+.btn-search {
+  min-width: 100px;
+}
+
+.search-input {
+  height: 100%;
+}
+
+.welcome-title {
+  margin-bottom: 20px;
+}
+
+.login {
+  font-weight: 600;
+  color: #4D0632;
+}
+
+.login-title {
+  margin-bottom: 20px;
+}
+
+form {
+  width: 100%;
+}
+
+.login-box {
+  z-index: 5;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  padding: 15px 50px;
+  background-color: #4D0632;
+  border-bottom: 5px solid #FEE098;
+  border-left: 5px solid #FEE098;
+  border-bottom-left-radius: 50px;
+  transition-duration: .5s;
+}
+
+.login-box label {
+  color: white;
+}
+
+.login-box.hidden {
+  transform: translateX(100%);
+}
+
+.login-box.visible {
+  transform: none;
+}
+
+.login-gap {
+  margin-top: 6px;
+}
+
+.login-buttons {
+  margin-top: 20px;
+}
+
+.col-6 button {
+  width: 100%;
+}
+
+.btn-primary {
+  background-color: #4D0632;
+  border: 1px solid #FEE098;
+  color: #FEE098;
+}
+
+.btn-primary:hover {
+  background-color: #FEE098;
+  border: 1px solid #FEE098;
+  color: #4D0632;
+}
+
+h2 {
+  font-size: 30px;
+  font-family: 'Lobster', cursive;
+  color: #4D0632;
+}
+
+input {
+  padding-left: 5px;
+  width: 100%;
+}
+
 .text-link {
-  color: blue;
   cursor: pointer;
+  margin: 0 1em;
+}
+
+.col.spacer {
+  flex-grow: 2;
+}
+
+.tabs {
+  margin-left: -10px;
+}
+
+.tab-item {
+  padding: 5px;
+  color: #4D0632;
+  font-weight: 600;
+  margin: 15px;
+}
+
+.tab-item span {
+  color: #4D0632;
+  font-size: 18px;
+}
+
+.tab-item span:hover, .adv-search p:hover {
+  cursor: pointer;
+}
+
+.tab-item.active {
+  border-bottom: 5px solid #4D0632;
+  font-weight: 800;
+}
+
+.adv-search {
+  font-size: 14px;
+  padding: 15px;
+  color: #FEE098;
+  font-weight: 600;
+}
+
+.adv-search p {
+  margin: 0;
+}
+
+.extended-fields {
+  margin: 15px 0;
+  padding: 15px 0;
+  border-top: 1px solid #FEE098;
+  border-bottom: 1px solid #FEE098;
+}
+
+.extended-fields.hidden {
+  display: none;
+}
+
+.results {
+  min-height: 50px;
+  color: white;
+}
+
+.result-list {
+  padding: 20px 30px 50px;
+  margin-top: 30px;
+}
+
+.result-title {
+  text-align: center;
+  padding: 20px;
+  color: #FEE098;
+  border-bottom: 3px solid #FEE098;
+}
+
+.result-title p {
+  margin: 0;
+}
+
+.single-result {
+  text-align: center;
+  padding: 20px;
+  border-bottom: 1px dotted #FEE098;
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  right: 0;
 }

@@ -2,19 +2,23 @@ class UsersController < ApplicationController
 
   def all
     if admin()
-      render json: User.all_users()
+      render json: User.all_users(params)
     else
       render status: 401, json: nil
     end
   end
 
   def create
-    # Create the user
-    newUser = User.create_user({
-      "username" => params["username"],
-      "password" => params["password"],
-      "password_confirm" => params["password_confirm"],
-    })
+    newUser = nil
+    # Sanity test that the password matches the confirm
+    if params["password"] === params["password_confirm"]
+      # Create the user
+      newUser = User.create_user({
+        "username" => params["username"],
+        "password" => params["password"],
+        "password_confirm" => params["password_confirm"],
+      })
+    end
     if newUser.nil?
       # User creation failed
       render status: 400, json: nil
@@ -57,6 +61,60 @@ class UsersController < ApplicationController
       render json: { "status": "success" }
     else
       # Not allowed to delete the user
+      render status: 401, json: nil
+    end
+  end
+
+  def create_save
+    username = params["username"] || ''
+    if authorized(username)
+      ref_type = (params["ref_type"] || '').to_s.strip
+      ref_key = (params["ref_key"] || '').to_s.strip
+      if ["airport", "flight"].include?(ref_type.downcase) && ref_key.length>0
+        # Add the reference
+        begin
+          SavedRecord.create(
+            user_id: session[:current_user_id],
+            ref_type: ref_type,
+            ref_key: ref_key
+          )
+          # Something went wrong, return a 500 error with no body
+          render status: 201, json: nil
+        rescue
+          # Something went wrong, return a 500 error with no body
+          render status: 500, json: nil
+        end
+      else
+        # The reference pieces are missing or invalid
+        render status: 400, json: nil
+      end
+    else
+      # Not allowed to edit this user's saves
+      render status: 401, json: nil
+    end
+  end
+
+  def delete_save
+    username = params["username"] || ''
+    if authorized(username)
+      begin
+        id = params["id"].to_i
+        if id > 0
+          # Everything seems ok, try the delete
+          toDelete = SavedRecord.find(id)
+          if toDelete
+            toDelete.destroy
+          end
+        else
+          # Bad ID
+          render status: 400, json: nil
+        end
+      rescue
+        # Something went wrong, return a 500 error with no body
+        render status: 500, json: nil
+      end
+    else
+      # Not allowed to edit this user's saves
       render status: 401, json: nil
     end
   end
