@@ -195,6 +195,11 @@ select {
   margin: 0;
 }
 
+legend.adv-search {
+  margin: 0;
+  padding: 0;
+}
+
 .extended-fields {
   margin: 15px 0;
   padding: 15px 0;

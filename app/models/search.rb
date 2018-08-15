@@ -50,7 +50,9 @@ class Search
         results = ActiveRecord::Base.connection.raw_connection.exec_prepared('place_select', pageValues)
       end
       return self.convertResults(results, self.getPlacesTypes())
-    rescue
+    rescue => e
+      # Print out the exception so we know what happened
+      p e
       # Something went wrong, instead of throwing an error and doing
       # nothing, return a nil so that the controller will inform the client
       return nil
@@ -65,7 +67,9 @@ class Search
       sqlValues = [user_id, *pageValues]
       results = ActiveRecord::Base.connection.raw_connection.exec_prepared('user_places', sqlValues)
       return self.convertResults(results, self.getPlacesTypes())
-    rescue
+    rescue => e
+      # Print out the exception so we know what happened
+      p e
       # Something went wrong, instead of throwing an error and doing
       # nothing, return a nil so that the controller will inform the client
       return nil
@@ -104,7 +108,9 @@ class Search
         results = ActiveRecord::Base.connection.raw_connection.exec_prepared('flight_select', pageValues)
       end
       return self.convertResults(results, self.getFlightsTypes())
-    rescue
+    rescue => e
+      # Print out the exception so we know what happened
+      p e
       # Something went wrong, instead of throwing an error and doing
       # nothing, return a nil so that the controller will inform the client
       return nil
@@ -119,7 +125,9 @@ class Search
       sqlValues = [user_id, *pageValues]
       results = ActiveRecord::Base.connection.raw_connection.exec_prepared('user_flights', sqlValues)
       return self.convertResults(results, self.getFlightsTypes())
-    rescue
+    rescue => e
+      # Print out the exception so we know what happened
+      p e
       # Something went wrong, instead of throwing an error and doing
       # nothing, return a nil so that the controller will inform the client
       return nil
