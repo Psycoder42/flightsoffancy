@@ -2,10 +2,20 @@ class FlightSearchResults extends React.Component {
   constructor(props) {
     super(props)
     this.submitPaginate = this.submitPaginate.bind(this)
+    this.saveToUser = this.saveToUser.bind(this)
   }
 
   submitPaginate(event) {
     this.props.changePaginate(event.target.value)
+  }
+
+  saveToUser(value) {
+    let data = {
+      user_id: this.props.curUser.user_id,
+      ref_type: 'flight',
+      ref_key: value
+    }
+    this.props.submitToUser(data)
   }
 
   render() {
@@ -48,7 +58,8 @@ class FlightSearchResults extends React.Component {
             <p>IATA</p>
           </div>
         </div>
-        {this.props.searchResults.length > 0 ?
+        {
+          this.props.searchResults.length > 0 ?
           this.props.searchResults.map((result, index) => {
             return (
               <div className="row single-result">
@@ -74,6 +85,14 @@ class FlightSearchResults extends React.Component {
                 <div className="col-1">
                   {result.dest_iata_code}
                 </div>
+                {
+                  this.props.curUser?
+                  <div className="col-12 text-right p-0">
+                    <button onClick={this.saveToUser(result.route_id)} class="btn btn-save">Save</button>
+                  </div>
+                  :
+                  ''
+                }
               </div>
             )
           })

@@ -21,6 +21,7 @@ class App extends React.Component {
     this.rerunQuery = this.rerunQuery.bind(this)
     this.onTabChange = this.onTabChange.bind(this)
     this.flightSearch = this.flightSearch.bind(this)
+    this.submitToUser = this.submitToUser.bind(this)
     this.airportSearch = this.airportSearch.bind(this)
     this.toggleCredForm = this.toggleCredForm.bind(this)
     this.changePaginate = this.changePaginate.bind(this)
@@ -73,6 +74,19 @@ class App extends React.Component {
       // Change it immediately
       this.setState(stateChanges)
     }
+  }
+
+  submitToUser(data) {
+    fetch(`/users/${this.state.curUser.username}/saved`, {
+      body: JSON.stringify(data),
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json()).then(savedSearch => {
+      console.log(savedSearch);
+    }).catch(error => console.log(error))
   }
 
   // Function for handling airport search query
@@ -166,12 +180,16 @@ class App extends React.Component {
           searchResults={this.state.searchResults}
           paginateVal={this.state.paginateVal}
           changePaginate={this.changePaginate}
+          curUser={this.state.curUser}
+          submitToUser={this.submitToUser}
         />
       } else if (this.state.activeTab == "airports") {
         searchResults = <AirportSearchResults
           searchResults={this.state.searchResults}
           paginateVal={this.state.paginateVal}
           changePaginate={this.changePaginate}
+          curUser={this.state.curUser}
+          submitToUser={this.submitToUser}
         />
       }
     }
