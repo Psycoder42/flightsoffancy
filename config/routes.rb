@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   put '/users/:username', to: 'users#update'
   delete '/users/:username', to: 'users#delete'
   post '/users/:username/saved', to: 'users#create_save'
-  delete '/users/:username/saved/:id', to: 'users#delete_save'
+  delete '/users/:username/saved', to: 'users#delete_save'
 
   get '/countries/search', to: 'countries#search'
   get '/countries/search/fields', to: 'countries#fields'

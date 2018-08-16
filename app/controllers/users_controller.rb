@@ -80,7 +80,9 @@ class UsersController < ApplicationController
           )
           # Something went wrong, return a 500 error with no body
           render status: 201, json: nil
-        rescue
+        rescue => e
+          # Print out the exception so we know what happened
+          p e
           # Something went wrong, return a 500 error with no body
           render status: 500, json: nil
         end
@@ -98,18 +100,18 @@ class UsersController < ApplicationController
     username = params["username"] || ''
     if authorized(username)
       begin
-        id = params["id"].to_i
-        if id > 0
-          # Everything seems ok, try the delete
-          toDelete = SavedRecord.find(id)
-          if toDelete
-            toDelete.destroy
-          end
-        else
-          # Bad ID
-          render status: 400, json: nil
+        ref_type = params["ref_type"]
+        ref_key = params["ref_key"].to_s
+        toDelete = SavedRecord.where(
+          "user_id = ? AND ref_type = ? AND ref_key = ?",
+          session[:current_user_id], ref_type, ref_key
+        ).first
+        if toDelete
+          toDelete.destroy
         end
-      rescue
+      rescue => e
+        # Print out the exception so we know what happened
+        p e
         # Something went wrong, return a 500 error with no body
         render status: 500, json: nil
       end

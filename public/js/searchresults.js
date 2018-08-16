@@ -58,7 +58,6 @@ class FlightSearchResults extends React.Component {
 
   saveToUser(value) {
     let data = {
-      user_id: this.props.curUser.user_id,
       ref_type: 'flight',
       ref_key: value
     }
@@ -66,25 +65,22 @@ class FlightSearchResults extends React.Component {
   }
 
   removeSavedFlight(value) {
-    value = encodeURI(value)
-    this.props.removeFromSavedFlights(value)
+    let data = {
+      ref_type: 'flight',
+      ref_key: value
+    }
+    this.props.removeFromSaved(data)
   }
 
   render() {
     return (
       <div className="container result-list">
-        {
-          this.props.curUserSaved ?
-          ''
-          :
-          <PageControls
-            curPage={this.props.curPage}
-            resultCount={this.props.resultsCount}
-            navigateToPage={this.props.navigateToPage}
-            changeResultsPerPage={this.props.changeResultsPerPage}
-          />
-        }
-
+        <PageControls
+          curPage={this.props.curPage}
+          resultCount={this.props.resultsCount}
+          navigateToPage={this.props.navigateToPage}
+          changeResultsPerPage={this.props.changeResultsPerPage}
+        />
         <div className="row result-title d-flex align-items-center">
           <div className="col-2">
             <p>Airline</p>
@@ -168,7 +164,6 @@ class AirportSearchResults extends React.Component {
 
   saveToUser(value) {
     let data = {
-      user_id: this.props.curUser.user_id,
       ref_type: 'airport',
       ref_key: value
     }
@@ -176,8 +171,11 @@ class AirportSearchResults extends React.Component {
   }
 
   removeSavedAirport(value) {
-    value = encodeURI(value)
-    this.props.removeFromSavedAirports(value)
+    let data = {
+      ref_type: 'airport',
+      ref_key: value
+    }
+    this.props.removeFromSaved(data)
   }
 
   render() {
@@ -218,17 +216,12 @@ class AirportSearchResults extends React.Component {
     // Render the results
     return (
       <div className="container result-list">
-        {
-          this.props.curUserSaved ?
-          ''
-          :
-          <PageControls
-            curPage={this.props.curPage}
-            resultCount={this.props.resultsCount}
-            navigateToPage={this.props.navigateToPage}
-            changeResultsPerPage={this.props.changeResultsPerPage}
-          />
-        }
+        <PageControls
+          curPage={this.props.curPage}
+          resultCount={this.props.resultsCount}
+          navigateToPage={this.props.navigateToPage}
+          changeResultsPerPage={this.props.changeResultsPerPage}
+        />
         <div className="row result-title d-flex align-items-center">
           <div className="col-7">
             <p>Airport</p>

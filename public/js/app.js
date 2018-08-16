@@ -31,6 +31,7 @@ class App extends React.Component {
     this.getCorrectPageState = this.getCorrectPageState.bind(this)
     this.changeResultsPerPage = this.changeResultsPerPage.bind(this)
     this.removeFromSavedFlights = this.removeFromSavedFlights.bind(this)
+    this.removeFromSavedAirports = this.removeFromSavedAirports.bind(this)
   }
 
   // Function for handling a new user registration
@@ -52,33 +53,29 @@ class App extends React.Component {
 
   rerunQuery(stateChanges) {
     if (this.state.activeTab == "flights") {
-      this.flightSearch(this.state.lastQuery, stateChanges)
+      if (this.state.curUserSaved) {
+        this.showSavedFlight(stateChanges)
+      } else {
+        this.flightSearch(this.state.lastQuery, stateChanges)
+      }
     } else if (this.state.activeTab == "airports") {
-      this.airportSearch(this.state.lastQuery, stateChanges)
+      if (this.state.curUserSaved) {
+        this.showSavedAirport(stateChanges)
+      } else {
+        this.airportSearch(this.state.lastQuery, stateChanges)
+      }
     }
   }
 
   navigateToPage(value) {
     let newValue = Math.max(1, value)
     let stateChanges = { curPage: newValue }
-    if (this.state.lastQuery !== null) {
-      // Delegate the state change to the query
-      this.rerunQuery(stateChanges)
-    } else {
-      // Change it immediately
-      this.setState(stateChanges)
-    }
+    this.rerunQuery(stateChanges)
   }
 
   changeResultsPerPage(value) {
     let stateChanges = { resultsPerPage: value }
-    if (this.state.lastQuery !== null) {
-      // Delegate the state change to the query
-      this.rerunQuery(stateChanges)
-    } else {
-      // Change it immediately
-      this.setState(stateChanges)
-    }
+    this.rerunQuery(stateChanges)
   }
 
   submitToUser(data) {
@@ -102,7 +99,7 @@ class App extends React.Component {
       // This is a rerun search because some controls were changed
       // Make sure to use the updated (pending) values when doing the search
       // But default to the existing state values if they aren't provided
-      curPage = stateUpdates.curPage || curPage
+      curPage = stateUpdates.curPage || this.state.curPage
       resultsPerPage = stateUpdates.resultsPerPage || resultsPerPage
     }
     // At this point the local variables are the ones we want to store them
@@ -142,37 +139,59 @@ class App extends React.Component {
       })
   }
 
+  // Function for handling saved flights search query
   showSavedFlight(stateUpdates) {
-    fetch(`/flights/search/saved/${this.state.curUser.username}`)
-    .then(res => res.json()).then(savedResults => {
-      stateUpdates.searchResults = savedResults
-      stateUpdates.activeTab = 'flights'
-      stateUpdates.curUserSaved = true
-      this.setState(stateUpdates)
-      window.scrollTo({top: (window.innerHeight - 75), behavior: 'smooth'});
-    })
+    // Make sure we have the correct page state
+    stateUpdates = this.getCorrectPageState(stateUpdates)
+    // Run the search
+    fetch(`/flights/search/saved/${this.state.curUser.username}?r=${stateUpdates.resultsPerPage}&p=${stateUpdates.curPage}`)
+      .then(res => res.json()).then(savedResults => {
+        stateUpdates.searchResults = savedResults
+        stateUpdates.activeTab = 'flights'
+        stateUpdates.curUserSaved = true
+        this.setState(stateUpdates)
+        window.scrollTo({top: (window.innerHeight - 75), behavior: 'smooth'});
+      })
   }
 
+  // Function for handling saved airport search query
   showSavedAirport(stateUpdates) {
-    fetch(`/places/search/saved/${this.state.curUser.username}`)
-    .then(res => res.json()).then(savedResults => {
-      stateUpdates.searchResults = savedResults
-      stateUpdates.activeTab = 'airports'
-      stateUpdates.curUserSaved = true
-      this.setState(stateUpdates)
-      window.scrollTo({top: (window.innerHeight - 75), behavior: 'smooth'});
-    })
+    // Make sure we have the correct page state
+    stateUpdates = this.getCorrectPageState(stateUpdates)
+    // Run the search
+    fetch(`/places/search/saved/${this.state.curUser.username}?r=${stateUpdates.resultsPerPage}&p=${stateUpdates.curPage}`)
+      .then(res => res.json()).then(savedResults => {
+        stateUpdates.searchResults = savedResults
+        stateUpdates.activeTab = 'airports'
+        stateUpdates.curUserSaved = true
+        this.setState(stateUpdates)
+        window.scrollTo({top: (window.innerHeight - 75), behavior: 'smooth'});
+      })
   }
 
-  removeFromSavedFlights(value, stateUpdates) {
-    fetch(`/users/${this.state.curUser.username}/saved/${value}`, { method: 'DELETE' })
+  removeFromSavedFlights(data) {
+    fetch(`/users/${this.state.curUser.username}/saved`, {
+      body: JSON.stringify(data),
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    })
       .then(res => {
         this.showSavedFlight()
       }).catch(error => console.log(error))
   }
 
-  removeFromSavedAirports(value, stateUpdates) {
-    fetch(`/users/${this.state.curUser.username}/saved/${value}`, { method: 'DELETE' })
+  removeFromSavedAirports(data) {
+    fetch(`/users/${this.state.curUser.username}/saved`, {
+      body: JSON.stringify(data),
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    })
       .then(res => {
         this.showSavedAirport()
       }).catch(error => console.log(error))
@@ -242,7 +261,7 @@ class App extends React.Component {
           submitToUser={this.submitToUser}
           navigateToPage={this.navigateToPage}
           changeResultsPerPage={this.changeResultsPerPage}
-          removeFromSavedFlights={this.removeFromSavedFlights}
+          removeFromSaved={this.removeFromSavedFlights}
         />
       } else if (this.state.activeTab == "airports") {
         searchResults = <AirportSearchResults
@@ -254,6 +273,7 @@ class App extends React.Component {
           submitToUser={this.submitToUser}
           navigateToPage={this.navigateToPage}
           changeResultsPerPage={this.changeResultsPerPage}
+          removeFromSaved={this.removeFromSavedAirports}
         />
       }
     }
