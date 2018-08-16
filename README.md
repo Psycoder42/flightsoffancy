@@ -37,7 +37,7 @@ In addition to the fields, there are two additional parameters that can be passe
 
 ### Known issues
 - There currently is no way to use OR in search conditions
-- Users currently can't paginate their saved airports and routes
+- Results page for saved entries can be wrong when clicking on the nav links to retrieve results
 
 ### Potential future enhancements
 - Add admin abilities (update database entries, manage users)
