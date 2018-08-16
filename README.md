@@ -9,11 +9,11 @@ This site was created with Ruby on Rails. It is supported by a Postgres database
 ### Design and build approach
 We attacked this by dividing the work into back and front end sections. The idea was that the separation would allow the most efficient use of time since it almost totally eliminated the possibility of stepping on each other's toes. While the back end was incomplete, the front end work would use stubbed out data and as the back end became available it would be incorporated, replacing the stubbed out data.
 
-### Site API
-Because of the design approach we took, there is a fairly extensive search API available (more so than is apparent in the front end). Here is a quick break down of the search API:
-
 ### UI & Front End
 With a large amount of data available for us to pull from, our next challenge was to figure out what information we wanted to provide to do the end user. We ultimately decided on building a search form front end that would return a list of results based on a user's search parameters. Users would also be able to choose between searching for flight routes and searching for airports.
+
+### Site API
+Because of the design approach we took, there is a fairly extensive search API available (more so than is apparent in the front end). Here is a quick break down of the search API:
 
 ##### Endpoints
 The following search endpoints are available and can be called using an HTTP GET request
