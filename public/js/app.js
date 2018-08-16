@@ -11,6 +11,7 @@ class App extends React.Component {
       searchResults: null,
       activeTab: "flights",
       lastQuery: null,
+      curUserSaved: false,
       resultsPerPage: 5,
       curPage: 1
     }
@@ -23,10 +24,13 @@ class App extends React.Component {
     this.flightSearch = this.flightSearch.bind(this)
     this.submitToUser = this.submitToUser.bind(this)
     this.airportSearch = this.airportSearch.bind(this)
-    this.toggleCredForm = this.toggleCredForm.bind(this)
     this.navigateToPage = this.navigateToPage.bind(this)
+    this.toggleCredForm = this.toggleCredForm.bind(this)
+    this.showSavedFlight = this.showSavedFlight.bind(this)
+    this.showSavedAirport = this.showSavedAirport.bind(this)
     this.getCorrectPageState = this.getCorrectPageState.bind(this)
     this.changeResultsPerPage = this.changeResultsPerPage.bind(this)
+    this.removeFromSavedFlights = this.removeFromSavedFlights.bind(this)
   }
 
   // Function for handling a new user registration
@@ -86,7 +90,6 @@ class App extends React.Component {
         'Content-Type': 'application/json'
       }
     }).then(res => res.json()).then(savedSearch => {
-      console.log(savedSearch);
     }).catch(error => console.log(error))
   }
 
@@ -118,7 +121,9 @@ class App extends React.Component {
       .then(res => res.json()).then(searchResults => {
         stateUpdates.lastQuery = query
         stateUpdates.searchResults = searchResults
+        stateUpdates.curUserSaved = false
         this.setState(stateUpdates)
+
       })
   }
 
@@ -131,8 +136,36 @@ class App extends React.Component {
       .then(res => res.json()).then(searchResults => {
         stateUpdates.lastQuery = query
         stateUpdates.searchResults = searchResults
+        stateUpdates.curUserSaved = false
         this.setState(stateUpdates)
+        window.scrollTo({top: (window.innerHeight - 75), behavior: 'smooth'});
       })
+  }
+
+  showSavedFlight(stateUpdates) {
+    fetch(`/flights/search/saved/${this.state.curUser.username}`)
+    .then(res => res.json()).then(savedResults => {
+      stateUpdates.searchResults = savedResults
+      stateUpdates.curUserSaved = true
+      this.setState(stateUpdates)
+    })
+  }
+
+  showSavedAirport(stateUpdates) {
+    fetch(`/places/search/saved/${this.state.curUser}`)
+    .then(res => res.json()).then(savedResults => {
+      stateUpdates.lastQuery = `/places/search/saved/${this.state.curUser}`
+      stateUpdates.searchResults = savedResults
+      stateUpdates.curUserSaved = true
+      this.setState(stateUpdates)
+    })
+  }
+
+  removeFromSavedFlights(value, stateUpdates) {
+    fetch(`/users/${this.state.curUser.username}/saved/${value}`, { method: 'DELETE' })
+      .then(res => {
+        this.showSavedFlight()
+      }).catch(error => console.log(error))
   }
 
   // Function for handling a user logging in
@@ -193,16 +226,19 @@ class App extends React.Component {
         searchResults = <FlightSearchResults
           curPage={this.state.curPage}
           curUser={this.state.curUser}
+          curUserSaved={this.state.curUserSaved}
           searchResults={this.state.searchResults}
           resultsPerPage={this.state.resultsPerPage}
           submitToUser={this.submitToUser}
           navigateToPage={this.navigateToPage}
           changeResultsPerPage={this.changeResultsPerPage}
+          removeFromSavedFlights={this.removeFromSavedFlights}
         />
       } else if (this.state.activeTab == "airports") {
         searchResults = <AirportSearchResults
           curPage={this.state.curPage}
           curUser={this.state.curUser}
+          curUserSaved={this.state.curUserSaved}
           searchResults={this.state.searchResults}
           resultsPerPage={this.state.resultsPerPage}
           submitToUser={this.submitToUser}
@@ -218,6 +254,8 @@ class App extends React.Component {
             curUser={this.state.curUser}
             logout={this.logout}
             toggleCredForm={this.toggleCredForm}
+            showSavedFlight={this.showSavedFlight}
+            showSavedAirport={this.showSavedAirport}
           />
           <CredentialsForm
             signin={this.state.credFormIsSignIn}

@@ -22,14 +22,14 @@ class PageControls extends React.Component {
   render() {
     return (
       <div className="row paginate-results d-flex align-items-center">
-        <div className="col-1">
-          <label for="pageNum">Page </label>
+        <div className="col-1 p-0 text-right">
+          <label for="pageNum">Page: </label>
         </div>
         <div className="col-1">
           <input type="number" name="pageNum" ref="pageNum" min="1" defaultValue={this.props.curPage}/>
         </div>
-        <div className="col-1">
-          <button type="button" onClick={this.jumpToPage}>GO</button>
+        <div className="col-1 p-0">
+          <button type="button" className="btn btn-primary page-btn" onClick={this.jumpToPage}>Go</button>
         </div>
         <div className="col-2 offset-6 text-right">
           <p className="views-label">Results Per Page:</p>
@@ -53,6 +53,7 @@ class FlightSearchResults extends React.Component {
   constructor(props) {
     super(props)
     this.saveToUser = this.saveToUser.bind(this)
+    this.removeSavedFlight = this.removeSavedFlight.bind(this)
   }
 
   saveToUser(value) {
@@ -64,15 +65,26 @@ class FlightSearchResults extends React.Component {
     this.props.submitToUser(data)
   }
 
+  removeSavedFlight(value) {
+    value = encodeURI(value)
+    this.props.removeFromSavedFlights(value)
+  }
+
   render() {
     return (
       <div className="container result-list">
-        <PageControls
-          curPage={this.props.curPage}
-          resultCount={this.props.resultsCount}
-          navigateToPage={this.props.navigateToPage}
-          changeResultsPerPage={this.props.changeResultsPerPage}
-        />
+        {
+          this.props.curUserSaved ?
+          ''
+          :
+          <PageControls
+            curPage={this.props.curPage}
+            resultCount={this.props.resultsCount}
+            navigateToPage={this.props.navigateToPage}
+            changeResultsPerPage={this.props.changeResultsPerPage}
+          />
+        }
+
         <div className="row result-title d-flex align-items-center">
           <div className="col-2">
             <p>Airline</p>
@@ -126,7 +138,12 @@ class FlightSearchResults extends React.Component {
                 {
                   this.props.curUser?
                   <div className="col-12 text-right p-0">
-                    <button nClick={()=>{this.saveToUser(result.route_id)}} class="btn btn-save">Save</button>
+                    {
+                      this.props.curUserSaved ?
+                      <button onClick={()=>{this.removeSavedFlight(result.route_id)}} class="btn btn-remove">Remove Flight</button>
+                      :
+                      <button onClick={()=>{this.saveToUser(result.route_id)}} class="btn btn-save">Save Flight</button>
+                    }
                   </div>
                   :
                   ''
@@ -177,7 +194,7 @@ class AirportSearchResults extends React.Component {
             {
               this.props.curUser?
               <div className="col-12 text-right p-0">
-                <button nClick={()=>{this.saveToUser(result.airport_id)}} class="btn btn-save">Save</button>
+                <button onClick={()=>{this.saveToUser(result.airport_id)}} class="btn btn-save">Save Airport</button>
               </div>
               :
               ''
@@ -189,12 +206,17 @@ class AirportSearchResults extends React.Component {
     // Render the results
     return (
       <div className="container result-list">
-        <PageControls
-          curPage={this.props.curPage}
-          resultCount={this.props.resultsCount}
-          navigateToPage={this.props.navigateToPage}
-          changeResultsPerPage={this.props.changeResultsPerPage}
-        />
+        {
+          this.props.curUserSaved ?
+          ''
+          :
+          <PageControls
+            curPage={this.props.curPage}
+            resultCount={this.props.resultsCount}
+            navigateToPage={this.props.navigateToPage}
+            changeResultsPerPage={this.props.changeResultsPerPage}
+          />
+        }
         <div className="row result-title d-flex align-items-center">
           <div className="col-7">
             <p>Airport</p>
