@@ -123,7 +123,7 @@ class App extends React.Component {
         stateUpdates.searchResults = searchResults
         stateUpdates.curUserSaved = false
         this.setState(stateUpdates)
-
+        window.scrollTo({top: (window.innerHeight - 75), behavior: 'smooth'});
       })
   }
 
@@ -146,18 +146,21 @@ class App extends React.Component {
     fetch(`/flights/search/saved/${this.state.curUser.username}`)
     .then(res => res.json()).then(savedResults => {
       stateUpdates.searchResults = savedResults
+      stateUpdates.activeTab = 'flights'
       stateUpdates.curUserSaved = true
       this.setState(stateUpdates)
+      window.scrollTo({top: (window.innerHeight - 75), behavior: 'smooth'});
     })
   }
 
   showSavedAirport(stateUpdates) {
-    fetch(`/places/search/saved/${this.state.curUser}`)
+    fetch(`/places/search/saved/${this.state.curUser.username}`)
     .then(res => res.json()).then(savedResults => {
-      stateUpdates.lastQuery = `/places/search/saved/${this.state.curUser}`
       stateUpdates.searchResults = savedResults
+      stateUpdates.activeTab = 'airports'
       stateUpdates.curUserSaved = true
       this.setState(stateUpdates)
+      window.scrollTo({top: (window.innerHeight - 75), behavior: 'smooth'});
     })
   }
 
@@ -165,6 +168,13 @@ class App extends React.Component {
     fetch(`/users/${this.state.curUser.username}/saved/${value}`, { method: 'DELETE' })
       .then(res => {
         this.showSavedFlight()
+      }).catch(error => console.log(error))
+  }
+
+  removeFromSavedAirports(value, stateUpdates) {
+    fetch(`/users/${this.state.curUser.username}/saved/${value}`, { method: 'DELETE' })
+      .then(res => {
+        this.showSavedAirport()
       }).catch(error => console.log(error))
   }
 

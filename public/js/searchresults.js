@@ -137,7 +137,7 @@ class FlightSearchResults extends React.Component {
                 </div>
                 {
                   this.props.curUser?
-                  <div className="col-12 text-right p-0">
+                  <div className="col-12 text-right p-0 user-tab">
                     {
                       this.props.curUserSaved ?
                       <button onClick={()=>{this.removeSavedFlight(result.route_id)}} class="btn btn-remove">Remove Flight</button>
@@ -162,6 +162,8 @@ class FlightSearchResults extends React.Component {
 class AirportSearchResults extends React.Component {
   constructor(props) {
     super(props)
+    this.saveToUser = this.saveToUser.bind(this)
+    this.removeSavedAirport = this.removeSavedAirport.bind(this)
   }
 
   saveToUser(value) {
@@ -171,6 +173,11 @@ class AirportSearchResults extends React.Component {
       ref_key: value
     }
     this.props.submitToUser(data)
+  }
+
+  removeSavedAirport(value) {
+    value = encodeURI(value)
+    this.props.removeFromSavedAirports(value)
   }
 
   render() {
@@ -193,8 +200,13 @@ class AirportSearchResults extends React.Component {
             </div>
             {
               this.props.curUser?
-              <div className="col-12 text-right p-0">
-                <button onClick={()=>{this.saveToUser(result.airport_id)}} class="btn btn-save">Save Airport</button>
+              <div className="col-12 text-right p-0 user-tab">
+                {
+                  this.props.curUserSaved ?
+                  <button onClick={()=>{this.removeSavedAirport(result.airport_id)}} class="btn btn-remove">Remove Airport</button>
+                  :
+                  <button onClick={()=>{this.saveToUser(result.airport_id)}} class="btn btn-save">Save Airport</button>
+                }
               </div>
               :
               ''
