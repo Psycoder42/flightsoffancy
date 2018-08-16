@@ -41,6 +41,9 @@ class Navigation extends React.Component {
   render() {
 
     let backgroundColor = (this.state.scrolled ? "nav-color" : "")
+
+    let myFlights = ''
+
     // Default register link
     let registerLink = <span className="login text-link" onClick={this.doRegister}>
       Register
@@ -52,7 +55,12 @@ class Navigation extends React.Component {
     // Change the links if a user is signed in
     if (this.props.curUser) {
       // Register link disappears
-      registerLink = null
+      myFlights = <span className="login text-link" onClick={this.props.showSavedFlight}>
+        My Flights
+      </span>
+      registerLink = <span className="login text-link" onClick={this.props.showSavedAirport}>
+        My Airports
+      </span>
       // Sign in becomes sign out
       loginLink = <span className="login text-link" onClick={this.props.logout}>
         Sign Out
@@ -66,6 +74,7 @@ class Navigation extends React.Component {
         </div>
         <div className="col spacer"></div>
         <div className="col text-right">
+          {myFlights}
           {registerLink}
           {loginLink}
         </div>

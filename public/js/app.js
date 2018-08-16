@@ -8,14 +8,29 @@ class App extends React.Component {
       curUser: null,
       showCredForm: false,
       credFormIsSignIn: true,
-      searchResults: null
+      searchResults: null,
+      activeTab: "flights",
+      lastQuery: null,
+      curUserSaved: false,
+      resultsPerPage: 5,
+      curPage: 1
     }
     // Bind the custom functions
     this.login = this.login.bind(this)
     this.logout = this.logout.bind(this)
     this.register = this.register.bind(this)
-    this.search = this.search.bind(this)
+    this.rerunQuery = this.rerunQuery.bind(this)
+    this.onTabChange = this.onTabChange.bind(this)
+    this.flightSearch = this.flightSearch.bind(this)
+    this.submitToUser = this.submitToUser.bind(this)
+    this.airportSearch = this.airportSearch.bind(this)
+    this.navigateToPage = this.navigateToPage.bind(this)
     this.toggleCredForm = this.toggleCredForm.bind(this)
+    this.showSavedFlight = this.showSavedFlight.bind(this)
+    this.showSavedAirport = this.showSavedAirport.bind(this)
+    this.getCorrectPageState = this.getCorrectPageState.bind(this)
+    this.changeResultsPerPage = this.changeResultsPerPage.bind(this)
+    this.removeFromSavedFlights = this.removeFromSavedFlights.bind(this)
   }
 
   // Function for handling a new user registration
@@ -35,12 +50,132 @@ class App extends React.Component {
     }).catch(error => console.log(error))
   }
 
-  // Function for handling search query
-  search(query) {
-    fetch('/flights/search?' + query).then(res => res.json()).then(searchResults => {
-      this.setState({ searchResults: searchResults})
-      // console.log(this.state.searchResults);
+  rerunQuery(stateChanges) {
+    if (this.state.activeTab == "flights") {
+      this.flightSearch(this.state.lastQuery, stateChanges)
+    } else if (this.state.activeTab == "airports") {
+      this.airportSearch(this.state.lastQuery, stateChanges)
+    }
+  }
+
+  navigateToPage(value) {
+    let newValue = Math.max(1, value)
+    let stateChanges = { curPage: newValue }
+    if (this.state.lastQuery !== null) {
+      // Delegate the state change to the query
+      this.rerunQuery(stateChanges)
+    } else {
+      // Change it immediately
+      this.setState(stateChanges)
+    }
+  }
+
+  changeResultsPerPage(value) {
+    let stateChanges = { resultsPerPage: value }
+    if (this.state.lastQuery !== null) {
+      // Delegate the state change to the query
+      this.rerunQuery(stateChanges)
+    } else {
+      // Change it immediately
+      this.setState(stateChanges)
+    }
+  }
+
+  submitToUser(data) {
+    fetch(`/users/${this.state.curUser.username}/saved`, {
+      body: JSON.stringify(data),
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json()).then(savedSearch => {
+    }).catch(error => console.log(error))
+  }
+
+  getCorrectPageState(stateChanges) {
+    let rerunSearch = !!stateChanges
+    let stateUpdates = stateChanges || {}
+    let curPage = 1
+    let resultsPerPage = this.state.resultsPerPage
+    if (rerunSearch) {
+      // This is a rerun search because some controls were changed
+      // Make sure to use the updated (pending) values when doing the search
+      // But default to the existing state values if they aren't provided
+      curPage = stateUpdates.curPage || curPage
+      resultsPerPage = stateUpdates.resultsPerPage || resultsPerPage
+    }
+    // At this point the local variables are the ones we want to store them
+    stateUpdates.curPage = curPage
+    stateUpdates.resultsPerPage = resultsPerPage
+    // Return the object with the correct state
+    return stateUpdates
+  }
+
+  // Function for handling airport search query
+  airportSearch(query, stateUpdates) {
+    // Make sure we have the correct page state
+    stateUpdates = this.getCorrectPageState(stateUpdates)
+    // Run the search
+    fetch(`/places/search?r=${stateUpdates.resultsPerPage}&p=${stateUpdates.curPage}${query}`)
+      .then(res => res.json()).then(searchResults => {
+        stateUpdates.lastQuery = query
+        stateUpdates.searchResults = searchResults
+        stateUpdates.curUserSaved = false
+        this.setState(stateUpdates)
+        window.scrollTo({top: (window.innerHeight - 75), behavior: 'smooth'});
+      })
+  }
+
+  // Function for handling flights search query
+  flightSearch(query, stateUpdates) {
+    // Make sure we have the correct page state
+    stateUpdates = this.getCorrectPageState(stateUpdates)
+    // Run the search
+    fetch(`/flights/search?r=${stateUpdates.resultsPerPage}&p=${stateUpdates.curPage}${query}`)
+      .then(res => res.json()).then(searchResults => {
+        stateUpdates.lastQuery = query
+        stateUpdates.searchResults = searchResults
+        stateUpdates.curUserSaved = false
+        this.setState(stateUpdates)
+        window.scrollTo({top: (window.innerHeight - 75), behavior: 'smooth'});
+      })
+  }
+
+  showSavedFlight(stateUpdates) {
+    fetch(`/flights/search/saved/${this.state.curUser.username}`)
+    .then(res => res.json()).then(savedResults => {
+      stateUpdates.searchResults = savedResults
+      stateUpdates.activeTab = 'flights'
+      stateUpdates.curUserSaved = true
+      this.setState(stateUpdates)
+      window.scrollTo({top: (window.innerHeight - 75), behavior: 'smooth'});
     })
+  }
+
+  showSavedAirport(stateUpdates) {
+    fetch(`/places/search/saved/${this.state.curUser.username}`)
+    .then(res => res.json()).then(savedResults => {
+      stateUpdates.searchResults = savedResults
+      stateUpdates.activeTab = 'airports'
+      stateUpdates.curUserSaved = true
+      this.setState(stateUpdates)
+      window.scrollTo({top: (window.innerHeight - 75), behavior: 'smooth'});
+    })
+  }
+
+  removeFromSavedFlights(value, stateUpdates) {
+    fetch(`/users/${this.state.curUser.username}/saved/${value}`, { method: 'DELETE' })
+      .then(res => {
+        this.showSavedFlight()
+      }).catch(error => console.log(error))
+  }
+
+  removeFromSavedAirports(value, stateUpdates) {
+    fetch(`/users/${this.state.curUser.username}/saved/${value}`, { method: 'DELETE' })
+      .then(res => {
+        this.showSavedAirport()
+      }).catch(error => console.log(error))
   }
 
   // Function for handling a user logging in
@@ -78,8 +213,50 @@ class App extends React.Component {
     })
   }
 
+  // Function to switch which search tab is open
+  onTabChange(newTab) {
+    this.setState({
+      searchResults: null,
+      activeTab: newTab
+    })
+  }
+
   // Render this component
   render() {
+    // Default to show the flights search
+    let searchbox = <FlightSearchBar search={this.flightSearch}/>
+    // Swhich to a different search if appropriate
+    if (this.state.activeTab == "airports") {
+      searchbox = <AirportSearchBar search={this.airportSearch}/>
+    }
+    // Default the search results to null
+    let searchResults = null
+    if (this.state.searchResults) {
+      if (this.state.activeTab == "flights") {
+        searchResults = <FlightSearchResults
+          curPage={this.state.curPage}
+          curUser={this.state.curUser}
+          curUserSaved={this.state.curUserSaved}
+          searchResults={this.state.searchResults}
+          resultsPerPage={this.state.resultsPerPage}
+          submitToUser={this.submitToUser}
+          navigateToPage={this.navigateToPage}
+          changeResultsPerPage={this.changeResultsPerPage}
+          removeFromSavedFlights={this.removeFromSavedFlights}
+        />
+      } else if (this.state.activeTab == "airports") {
+        searchResults = <AirportSearchResults
+          curPage={this.state.curPage}
+          curUser={this.state.curUser}
+          curUserSaved={this.state.curUserSaved}
+          searchResults={this.state.searchResults}
+          resultsPerPage={this.state.resultsPerPage}
+          submitToUser={this.submitToUser}
+          navigateToPage={this.navigateToPage}
+          changeResultsPerPage={this.changeResultsPerPage}
+        />
+      }
+    }
     return (
       <main>
         <div className="header container-fluid">
@@ -87,6 +264,8 @@ class App extends React.Component {
             curUser={this.state.curUser}
             logout={this.logout}
             toggleCredForm={this.toggleCredForm}
+            showSavedFlight={this.showSavedFlight}
+            showSavedAirport={this.showSavedAirport}
           />
           <CredentialsForm
             signin={this.state.credFormIsSignIn}
@@ -98,19 +277,14 @@ class App extends React.Component {
             <div className="row">
               <h1 className="welcome-title">Welcome{this.state.curUser ? ` ${this.state.curUser.username}` : ''}!</h1>
             </div>
-            <SearchBar
-              search={this.search}
-            />
+            <div className="search-area">
+              <SearchTabs switched={this.onTabChange} activeTab={this.state.activeTab}/>
+              {searchbox}
+            </div>
           </div>
         </div>
         <div className="results container-fluid">
-            {
-              this.state.searchResults ?
-              <SearchResults
-                searchResults={this.state.searchResults}
-              />
-              : ''
-            }
+          {searchResults}
         </div>
       </main>
     )

@@ -47,10 +47,13 @@ class Search
         ActiveRecord::Base.connection.raw_connection.exec("DEALLOCATE #{prepared_name}")
       else
         # No user input so we can use the reusible prepared statement
+        self.preparePlacesSQL()
         results = ActiveRecord::Base.connection.raw_connection.exec_prepared('place_select', pageValues)
       end
       return self.convertResults(results, self.getPlacesTypes())
-    rescue
+    rescue => e
+      # Print out the exception so we know what happened
+      p e
       # Something went wrong, instead of throwing an error and doing
       # nothing, return a nil so that the controller will inform the client
       return nil
@@ -63,9 +66,12 @@ class Search
       user_id = params['user_id']
       pageValues = self.getSqlLimitAndOffset(params)
       sqlValues = [user_id, *pageValues]
+      self.prepareUserPlacesSQL()
       results = ActiveRecord::Base.connection.raw_connection.exec_prepared('user_places', sqlValues)
       return self.convertResults(results, self.getPlacesTypes())
-    rescue
+    rescue => e
+      # Print out the exception so we know what happened
+      p e
       # Something went wrong, instead of throwing an error and doing
       # nothing, return a nil so that the controller will inform the client
       return nil
@@ -101,10 +107,13 @@ class Search
         ActiveRecord::Base.connection.raw_connection.exec("DEALLOCATE #{prepared_name}")
       else
         # No user input so we can use the reusible prepared statement
+        self.prepareFlightsSQL()
         results = ActiveRecord::Base.connection.raw_connection.exec_prepared('flight_select', pageValues)
       end
       return self.convertResults(results, self.getFlightsTypes())
-    rescue
+    rescue => e
+      # Print out the exception so we know what happened
+      p e
       # Something went wrong, instead of throwing an error and doing
       # nothing, return a nil so that the controller will inform the client
       return nil
@@ -117,9 +126,12 @@ class Search
       user_id = params['user_id']
       pageValues = self.getSqlLimitAndOffset(params)
       sqlValues = [user_id, *pageValues]
+      self.prepareUserFlightsSQL()
       results = ActiveRecord::Base.connection.raw_connection.exec_prepared('user_flights', sqlValues)
       return self.convertResults(results, self.getFlightsTypes())
-    rescue
+    rescue => e
+      # Print out the exception so we know what happened
+      p e
       # Something went wrong, instead of throwing an error and doing
       # nothing, return a nil so that the controller will inform the client
       return nil
@@ -283,69 +295,77 @@ class Search
   end
 
   # Prepare the unfiltered (except for paging) place select statement
-  begin
-    ActiveRecord::Base.connection.raw_connection.prepare('place_select', "#{self.getPlacesQuery()} LIMIT $1 OFFSET $2")
-  rescue PG::DuplicatePstatement => e
-    # This is fine... it just means we already prepared it
+  def self.preparePlacesSQL()
+    begin
+      ActiveRecord::Base.connection.raw_connection.prepare('place_select', "#{self.getPlacesQuery()} LIMIT $1 OFFSET $2")
+    rescue PG::DuplicatePstatement => e
+      # This is fine... it just means we already prepared it
+    end
   end
 
   # Prepare the unfiltered (except for paging) flight select statement
-  begin
-    ActiveRecord::Base.connection.raw_connection.prepare('flight_select', "#{self.getFlightsQuery()} LIMIT $1 OFFSET $2")
-  rescue PG::DuplicatePstatement => e
-    # This is fine... it just means we already prepared it
+  def self.prepareFlightsSQL()
+    begin
+      ActiveRecord::Base.connection.raw_connection.prepare('flight_select', "#{self.getFlightsQuery()} LIMIT $1 OFFSET $2")
+    rescue PG::DuplicatePstatement => e
+      # This is fine... it just means we already prepared it
+    end
   end
 
   # Prepare the user place select statement
-  begin
-    ActiveRecord::Base.connection.raw_connection.prepare(
-      'user_places',
-      <<-SQL
-        SELECT *
-        FROM ( #{self.getPlacesQuery()} ) AS places
-        WHERE places.airport_id IN (
-          SELECT
-            CASE
-              WHEN saved_records.ref_type = 'airport'
-              THEN saved_records.ref_key
-              ELSE null
-            END AS f_key
-          FROM saved_records
-          WHERE saved_records.ref_type = 'airport'
-            AND saved_records.user_id = $1
-        )
-        LIMIT $2
-        OFFSET $3
-      SQL
-    )
-  rescue PG::DuplicatePstatement => e
-    # This is fine... it just means we already prepared it
+  def self.prepareUserPlacesSQL()
+    begin
+      ActiveRecord::Base.connection.raw_connection.prepare(
+        'user_places',
+        <<-SQL
+          SELECT *
+          FROM ( #{self.getPlacesQuery()} ) AS places
+          WHERE places.airport_id IN (
+            SELECT
+              CASE
+                WHEN saved_records.ref_type = 'airport'
+                THEN saved_records.ref_key
+                ELSE null
+              END AS f_key
+            FROM saved_records
+            WHERE saved_records.ref_type = 'airport'
+              AND saved_records.user_id = $1
+          )
+          LIMIT $2
+          OFFSET $3
+        SQL
+      )
+    rescue PG::DuplicatePstatement => e
+      # This is fine... it just means we already prepared it
+    end
   end
 
   # Prepare the user flights select statement
-  begin
-    ActiveRecord::Base.connection.raw_connection.prepare(
-      'user_flights',
-      <<-SQL
-        SELECT *
-        FROM ( #{self.getFlightsQuery()} ) AS flights
-        WHERE flights.route_id IN (
-          SELECT
-            CASE
-              WHEN saved_records.ref_type = 'flight'
-              THEN CAST ( saved_records.ref_key AS INTEGER )
-              ELSE null
-            END AS f_key
-          FROM saved_records
-          WHERE saved_records.ref_type = 'flight'
-            AND saved_records.user_id = $1
-        )
-        LIMIT $2
-        OFFSET $3
-      SQL
-    )
-  rescue PG::DuplicatePstatement => e
-    # This is fine... it just means we already prepared it
+  def self.prepareUserFlightsSQL()
+    begin
+      ActiveRecord::Base.connection.raw_connection.prepare(
+        'user_flights',
+        <<-SQL
+          SELECT *
+          FROM ( #{self.getFlightsQuery()} ) AS flights
+          WHERE flights.route_id IN (
+            SELECT
+              CASE
+                WHEN saved_records.ref_type = 'flight'
+                THEN CAST ( saved_records.ref_key AS INTEGER )
+                ELSE null
+              END AS f_key
+            FROM saved_records
+            WHERE saved_records.ref_type = 'flight'
+              AND saved_records.user_id = $1
+          )
+          LIMIT $2
+          OFFSET $3
+        SQL
+      )
+    rescue PG::DuplicatePstatement => e
+      # This is fine... it just means we already prepared it
+    end
   end
 
 end

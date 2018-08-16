@@ -112,8 +112,16 @@ form {
   margin-top: 20px;
 }
 
+.user-tab {
+  margin-top: 15px;
+}
+
 .col-6 button {
   width: 100%;
+}
+
+.page-btn {
+  padding: 3px 10px;
 }
 
 .btn-primary {
@@ -128,6 +136,32 @@ form {
   color: #4D0632;
 }
 
+.btn-save {
+  padding: 6px 20px;
+  background-color: #4D0632;
+  border: 1px solid #28a745;
+  color: #28a745;
+  ;
+}
+
+.btn-save:hover {
+  background-color: #28a745;
+  color: #4D0632;
+}
+
+.btn-remove {
+  padding: 6px 20px;
+  background-color: #4D0632;
+  border: 1px solid #b77379;
+  color: #b77379;
+  ;
+}
+
+.btn-remove:hover {
+  background-color: #b77379;
+  color: #4D0632;
+}
+
 h2 {
   font-size: 30px;
   font-family: 'Lobster', cursive;
@@ -135,8 +169,20 @@ h2 {
 }
 
 input {
-  padding-left: 5px;
+  padding-left: 10px;
   width: 100%;
+  border-radius: 10px;
+}
+
+select {
+  border-radius: 5px;
+  width: 100%;
+  padding-left: 10px;
+}
+
+.views-label {
+  margin: 0;
+  color: white;
 }
 
 .text-link {
@@ -182,6 +228,11 @@ input {
 
 .adv-search p {
   margin: 0;
+}
+
+legend.adv-search {
+  margin: 0;
+  padding: 0;
 }
 
 .extended-fields {
