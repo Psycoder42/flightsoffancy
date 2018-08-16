@@ -11,7 +11,7 @@ class App extends React.Component {
       searchResults: null,
       activeTab: "flights",
       lastQuery: null,
-      paginateVal: 5,
+      resultsPerPage: 5,
       curPage: 1
     }
     // Bind the custom functions
@@ -24,8 +24,9 @@ class App extends React.Component {
     this.submitToUser = this.submitToUser.bind(this)
     this.airportSearch = this.airportSearch.bind(this)
     this.toggleCredForm = this.toggleCredForm.bind(this)
-    this.changePaginate = this.changePaginate.bind(this)
     this.navigateToPage = this.navigateToPage.bind(this)
+    this.getCorrectPageState = this.getCorrectPageState.bind(this)
+    this.changeResultsPerPage = this.changeResultsPerPage.bind(this)
   }
 
   // Function for handling a new user registration
@@ -65,8 +66,8 @@ class App extends React.Component {
     }
   }
 
-  changePaginate(value) {
-    let stateChanges = { paginateVal: value }
+  changeResultsPerPage(value) {
+    let stateChanges = { resultsPerPage: value }
     if (this.state.lastQuery !== null) {
       // Delegate the state change to the query
       this.rerunQuery(stateChanges)
@@ -89,15 +90,31 @@ class App extends React.Component {
     }).catch(error => console.log(error))
   }
 
-  // Function for handling airport search query
-  airportSearch(query, stateChanges) {
+  getCorrectPageState(stateChanges) {
+    let rerunSearch = !!stateChanges
     let stateUpdates = stateChanges || {}
-    // Make sure to use the updated (pending) values when doing the search
-    // But default to the existing state values if they aren't provided
-    let page = stateUpdates.curPage || this.state.curPage
-    let resultCount = stateUpdates.paginateVal || this.state.paginateVal
+    let curPage = 1
+    let resultsPerPage = this.state.resultsPerPage
+    if (rerunSearch) {
+      // This is a rerun search because some controls were changed
+      // Make sure to use the updated (pending) values when doing the search
+      // But default to the existing state values if they aren't provided
+      curPage = stateUpdates.curPage || curPage
+      resultsPerPage = stateUpdates.resultsPerPage || resultsPerPage
+    }
+    // At this point the local variables are the ones we want to store them
+    stateUpdates.curPage = curPage
+    stateUpdates.resultsPerPage = resultsPerPage
+    // Return the object with the correct state
+    return stateUpdates
+  }
+
+  // Function for handling airport search query
+  airportSearch(query, stateUpdates) {
+    // Make sure we have the correct page state
+    stateUpdates = this.getCorrectPageState(stateUpdates)
     // Run the search
-    fetch(`/places/search?r=${resultCount}&p=${page}${query}`)
+    fetch(`/places/search?r=${stateUpdates.resultsPerPage}&p=${stateUpdates.curPage}${query}`)
       .then(res => res.json()).then(searchResults => {
         stateUpdates.lastQuery = query
         stateUpdates.searchResults = searchResults
@@ -106,14 +123,11 @@ class App extends React.Component {
   }
 
   // Function for handling flights search query
-  flightSearch(query, stateChanges) {
-    let stateUpdates = stateChanges || {}
-    // Make sure to use the updated (pending) values when doing the search
-    // But default to the existing state values if they aren't provided
-    let page = stateUpdates.curPage || this.state.curPage
-    let resultCount = stateUpdates.paginateVal || this.state.paginateVal
+  flightSearch(query, stateUpdates) {
+    // Make sure we have the correct page state
+    stateUpdates = this.getCorrectPageState(stateUpdates)
     // Run the search
-    fetch(`/flights/search?r=${resultCount}&p=${page}${query}`)
+    fetch(`/flights/search?r=${stateUpdates.resultsPerPage}&p=${stateUpdates.curPage}${query}`)
       .then(res => res.json()).then(searchResults => {
         stateUpdates.lastQuery = query
         stateUpdates.searchResults = searchResults
@@ -156,7 +170,7 @@ class App extends React.Component {
     })
   }
 
-  // Function to show/hide the credentials form
+  // Function to switch which search tab is open
   onTabChange(newTab) {
     this.setState({
       searchResults: null,
@@ -177,19 +191,23 @@ class App extends React.Component {
     if (this.state.searchResults) {
       if (this.state.activeTab == "flights") {
         searchResults = <FlightSearchResults
-          searchResults={this.state.searchResults}
-          paginateVal={this.state.paginateVal}
-          changePaginate={this.changePaginate}
+          curPage={this.state.curPage}
           curUser={this.state.curUser}
+          searchResults={this.state.searchResults}
+          resultsPerPage={this.state.resultsPerPage}
           submitToUser={this.submitToUser}
+          navigateToPage={this.navigateToPage}
+          changeResultsPerPage={this.changeResultsPerPage}
         />
       } else if (this.state.activeTab == "airports") {
         searchResults = <AirportSearchResults
-          searchResults={this.state.searchResults}
-          paginateVal={this.state.paginateVal}
-          changePaginate={this.changePaginate}
+          curPage={this.state.curPage}
           curUser={this.state.curUser}
+          searchResults={this.state.searchResults}
+          resultsPerPage={this.state.resultsPerPage}
           submitToUser={this.submitToUser}
+          navigateToPage={this.navigateToPage}
+          changeResultsPerPage={this.changeResultsPerPage}
         />
       }
     }

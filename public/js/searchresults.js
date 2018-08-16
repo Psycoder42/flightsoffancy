@@ -1,12 +1,58 @@
+class PageControls extends React.Component {
+  constructor(props) {
+    super(props)
+    this.jumpToPage = this.jumpToPage.bind(this)
+    this.changeResultCount = this.changeResultCount.bind(this)
+  }
+
+  jumpToPage(event) {
+    event.preventDefault()
+    if (this.refs.pageNum.value != this.props.curPage) {
+      this.props.navigateToPage(this.refs.pageNum.value)
+    }
+  }
+
+  changeResultCount(event) {
+    event.preventDefault()
+    if (event.target.value != this.props.resultsPerPage) {
+      this.props.changeResultsPerPage(event.target.value)
+    }
+  }
+
+  render() {
+    return (
+      <div className="row paginate-results d-flex align-items-center">
+        <div className="col-1">
+          <label for="pageNum">Page </label>
+        </div>
+        <div className="col-1">
+          <input type="number" name="pageNum" ref="pageNum" min="1" defaultValue={this.props.curPage}/>
+        </div>
+        <div className="col-1">
+          <button type="button" onClick={this.jumpToPage}>GO</button>
+        </div>
+        <div className="col-2 offset-6 text-right">
+          <p className="views-label">Results Per Page:</p>
+        </div>
+        <div className="col-1">
+          <select name="views" value={this.props.resultsPerPage} onChange={this.changeResultCount}>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+      </div>
+    )
+  }
+}
+
+
 class FlightSearchResults extends React.Component {
   constructor(props) {
     super(props)
-    this.submitPaginate = this.submitPaginate.bind(this)
     this.saveToUser = this.saveToUser.bind(this)
-  }
-
-  submitPaginate(event) {
-    this.props.changePaginate(event.target.value)
   }
 
   saveToUser(value) {
@@ -21,20 +67,12 @@ class FlightSearchResults extends React.Component {
   render() {
     return (
       <div className="container result-list">
-        <div className="row paginate-results d-flex align-items-center">
-          <div className="col-2 offset-9 text-right">
-            <p className="views-label">Results Per Page:</p>
-          </div>
-          <div className="col-1">
-            <select name="views" onChange={this.submitPaginate}>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <PageControls
+          curPage={this.props.curPage}
+          resultCount={this.props.resultsCount}
+          navigateToPage={this.props.navigateToPage}
+          changeResultsPerPage={this.props.changeResultsPerPage}
+        />
         <div className="row result-title d-flex align-items-center">
           <div className="col-2">
             <p>Airline</p>
@@ -107,11 +145,6 @@ class FlightSearchResults extends React.Component {
 class AirportSearchResults extends React.Component {
   constructor(props) {
     super(props)
-    this.submitPaginate = this.submitPaginate.bind(this)
-  }
-
-  submitPaginate(event) {
-    this.props.changePaginate(event.target.value)
   }
 
   saveToUser(value) {
@@ -156,20 +189,12 @@ class AirportSearchResults extends React.Component {
     // Render the results
     return (
       <div className="container result-list">
-        <div className="row paginate-results d-flex align-items-center">
-          <div className="col-2 offset-9 text-right">
-            <p className="views-label">Results Per Page:</p>
-          </div>
-          <div className="col-1">
-            <select name="views" onChange={this.submitPaginate}>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <PageControls
+          curPage={this.props.curPage}
+          resultCount={this.props.resultsCount}
+          navigateToPage={this.props.navigateToPage}
+          changeResultsPerPage={this.props.changeResultsPerPage}
+        />
         <div className="row result-title d-flex align-items-center">
           <div className="col-7">
             <p>Airport</p>
